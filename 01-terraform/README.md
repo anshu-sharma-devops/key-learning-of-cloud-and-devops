@@ -1,144 +1,204 @@
-# Terraform Learning Project
+# ☁️ Terraform Learning Journey
 
-Part of my **Key Learning of Cloud and DevOps** repository, this section focuses on learning and demonstrating **Infrastructure as Code (IaC)** using Terraform on AWS.
+Part of my **Key Learning of Cloud and DevOps** repository, this section documents my journey of learning **Infrastructure as Code (IaC)** using Terraform on AWS.
 
-Terraform lets you define infrastructure in code so it can be created, modified, and destroyed in a repeatable, version-controlled way — instead of clicking through the AWS Console by hand.
-
----
-
-## Objectives
-
-- Understand Terraform fundamentals
-- Create and manage AWS resources using code
-- Learn the core principles of Infrastructure as Code (IaC)
-- Manage infrastructure using Terraform state
-- Practice real-world Terraform workflows
-- Build reusable and scalable infrastructure patterns
+Terraform allows infrastructure to be defined, version controlled, and deployed using code instead of manually creating resources through the AWS Console.
 
 ---
 
-## Technologies Used
+## 🎯 Learning Objectives
 
-| Category   | Tools                  |
-|------------|-------------------------|
-| Cloud      | AWS                     |
-| IaC        | Terraform               |
-| Editor     | VS Code                 |
-| Versioning | Git & GitHub            |
-| OS / Shell | macOS Terminal          |
+- Learn Infrastructure as Code (IaC)
+- Provision AWS infrastructure using Terraform
+- Understand Terraform state management
+- Build reusable and scalable infrastructure
+- Follow production-grade infrastructure practices
+- Move from single EC2 deployments to complete cloud environments
 
 ---
 
-## Project Structure
+## 🛠️ Technologies Used
+
+| Category | Technology |
+|----------|------------|
+| Cloud Provider | AWS |
+| Infrastructure as Code | Terraform |
+| Version Control | Git |
+| Repository | GitHub |
+| Code Editor | VS Code |
+| Operating System | macOS |
+| Terminal | zsh |
+
+---
+
+## 📚 Terraform Learning Roadmap
+
+| Phase | Topic | Status |
+|-------|-------|--------|
+| Phase 1 | Basic EC2 Deployment | ✅ Completed |
+| Phase 2 | VPC and Networking | ✅ Completed |
+| Phase 3 | Remote State Management | 🔜 Planned |
+| Phase 4 | Multi-EC2 Infrastructure | 🔜 Planned |
+| Phase 5 | Load Balancer and Auto Scaling | 🔜 Planned |
+| Phase 6 | Jenkins Infrastructure | 🔜 Planned |
+| Phase 7 | Terraform Modules | 🔜 Planned |
+| Phase 8 | Production Infrastructure | 🔜 Planned |
+
+---
+
+## 📂 Repository Structure
 
 ```text
 01-terraform/
-├── provider.tf      # AWS provider configuration
-├── variables.tf     # Input variables
-├── main.tf           # Core resource definitions
-├── outputs.tf        # Output values
+│
 ├── README.md
-└── screenshots/      # Plan/apply evidence
+│
+├── phase-1-basic-ec2/
+│   ├── Terraform Fundamentals
+│   ├── EC2 Deployment
+│   ├── Security Groups
+│   └── Variables and Outputs
+│
+├── phase-2-vpc-networking/
+│   ├── VPC
+│   ├── Public Subnet
+│   ├── Internet Gateway
+│   ├── Route Tables
+│   ├── Security Groups
+│   └── EC2 Deployment in Custom Network
+│
+├── phase-3-remote-state/
+│
+├── phase-4-multi-ec2/
+│
+├── phase-5-load-balancer-autoscaling/
+│
+├── phase-6-jenkins-infrastructure/
+│
+├── phase-7-terraform-modules/
+│
+└── phase-8-production-infrastructure/
 ```
 
 ---
 
-## Resources Created
+## 🧠 Terraform Concepts Covered
 
-### ✅ Current
+### ✅ Completed
 
-- EC2 Instance
-- Security Group
+- Providers
+- Resources
+- Variables
+- Outputs
+- VPC
+- Subnets
+- Internet Gateway
+- Route Tables
+- Security Groups
+- `terraform init`
+- `terraform validate`
+- `terraform plan`
+- `terraform apply`
+- `terraform output`
+- `terraform destroy`
+
+### 🔄 Currently Learning
+
+- Terraform State
+- Remote Backends
+- State Locking
 
 ### 🔜 Upcoming
 
-- VPC
-- Public Subnet
-- Private Subnet
-- Internet Gateway
-- Route Tables
-- S3 Backend (remote state)
-- DynamoDB Table (state locking)
-- Terraform Modules
+- S3 Backend
+- DynamoDB State Locking
+- Modules
+- Workspaces
+- `count`
+- `for_each`
+- Dynamic Blocks
+- Multi-Environment Deployments
+- Production Folder Structure
 
 ---
 
-## Terraform Concepts Covered
+## 🚀 Terraform Workflow
 
-| Status         | Concepts                                                                 |
-|----------------|---------------------------------------------------------------------------|
-| ✅ Completed    | Provider, Resource, `terraform init`, `terraform validate`, `terraform plan` |
-| 🔄 In Progress  | `terraform apply`, Variables, Outputs                                     |
-| 🔜 Upcoming     | Terraform State, Remote Backend, Modules, `count`, `for_each`, Workspaces, Production Folder Structure |
-
----
-
-## Commands Reference
-
-```bash
-terraform init        # Initialize working directory and download providers
-terraform fmt          # Auto-format configuration files
-terraform validate     # Check configuration syntax and internal consistency
-terraform plan         # Preview changes before applying
-terraform apply        # Create or update infrastructure
-terraform output       # Display output values
-terraform destroy      # Tear down managed infrastructure
+```text
+Write Terraform Code
+        ↓
+terraform init
+        ↓
+terraform validate
+        ↓
+terraform plan
+        ↓
+terraform apply
+        ↓
+Infrastructure Created
+        ↓
+terraform destroy
 ```
 
 ---
 
-## Screenshots
+## 📈 Current Progress
 
-### Terraform Plan
-Terraform analyzed the configuration and generated an execution plan before creating any resources.
+### ✅ Phase 1 — Basic EC2 Deployment
+Created and managed:
 
-> *Add screenshot here.*
+- EC2 Instance
+- Security Group
+- Variables
+- Outputs
 
-### Terraform Apply
-Terraform created the AWS resources successfully.
+### ✅ Phase 2 — VPC and Networking
+Created and managed:
 
-> *Add screenshot here.*
-
-### EC2 Instance Created
-AWS EC2 instance provisioned via Terraform, visible in the AWS Console.
-
-> *Add screenshot here.*
-
----
-
-## Errors and Fixes
-
-This section will be updated with real issues encountered during the learning process, along with how they were resolved.
-
-| Error | Root Cause | Fix |
-|-------|------------|-----|
-| *No errors recorded yet* | — | — |
+- Custom VPC
+- Public Subnet
+- Internet Gateway
+- Route Table
+- Route Table Association
+- Security Group
+- EC2 Instance inside Custom VPC
 
 ---
 
-## Key Learnings
+## 🎓 Learning Goal
 
-- Terraform uses declarative configuration files to define and manage infrastructure.
-- `terraform plan` previews exactly what will change before anything is touched.
-- `terraform apply` provisions the resources defined in the configuration.
-- Terraform state keeps track of what infrastructure it manages and its current status.
-- Infrastructure defined as code can be destroyed and recreated consistently and predictably.
+The goal of this Terraform journey is to progress from:
 
----
-
-## Next Steps
-
-- [ ] Complete `terraform apply` workflow
-- [ ] Learn and implement Outputs
-- [ ] Learn State Management
-- [ ] Configure S3 Backend for remote state
-- [ ] Implement DynamoDB state locking
-- [ ] Build reusable Terraform Modules
-- [ ] Practice Terraform Workspaces
+```text
+Single EC2 Instance
+        ↓
+Custom Networking
+        ↓
+Remote State Management
+        ↓
+Multi-Server Infrastructure
+        ↓
+Production-Grade Deployments
+```
 
 ---
 
-## Author
+## 🔜 Next Phase
 
-**Anshu Sharma**
+### Phase 3 — Remote State Management
+
+Upcoming topics:
+
+- S3 Backend
+- DynamoDB Locking
+- Team Collaboration Workflow
+- Shared Terraform State
+
+---
+
+## 👨‍💻 Author
+
+**Anshu Sharma**  
 Cloud & DevOps Learning Journey
+
+GitHub: https://github.com/anshu-sharma-devops
