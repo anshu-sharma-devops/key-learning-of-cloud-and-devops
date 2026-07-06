@@ -122,7 +122,7 @@ Terraform allows infrastructure to be defined, version controlled, and deployed 
 - `terraform fmt`
 - `terraform plan`
 - `terraform apply`
-- `terraform output`
+- `terraform output`s
 - `terraform destroy`
 - `terraform init -reconfigure`
 - `terraform init -migrate-state`
