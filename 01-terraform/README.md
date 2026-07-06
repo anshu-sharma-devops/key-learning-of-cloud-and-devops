@@ -57,9 +57,9 @@ Each phase builds on the last: starting with a single EC2 instance, then adding 
 | 2 | VPC and Networking | ✅ Completed |
 | 3 | Remote State Management | ✅ Completed |
 | 4 | Multi-EC2 Infrastructure | ✅ Completed |
-| 5 | Load Balancer and Auto Scaling | 🚧 In Progress |
-| 6 | Jenkins Infrastructure | 🔜 Planned |
-| 7 | Terraform Modules | 🔜 Planned |
+| 5 | Load Balancer and Auto Scaling | ✅ Completed |
+| 6 | Jenkins Infrastructure | ✅ Completed |
+| 7 | Terraform Modules | 🚧 In Progress |
 | 8 | Production Infrastructure | 🔜 Planned |
 
 ---
@@ -100,14 +100,18 @@ Each phase builds on the last: starting with a single EC2 instance, then adding 
 │   ├── Terraform Outputs
 │   └── Multi-Server Architecture
 │
-├── phase-5-load-balancer-autoscaling/   🚧 in progress
+├── phase-5-load-balancer-autoscaling/
 │   ├── Application Load Balancer
 │   ├── Target Groups
 │   ├── Launch Templates
 │   └── Auto Scaling Groups
 │
 ├── phase-6-jenkins-infrastructure/
-├── phase-7-terraform-modules/
+│   ├── Jenkins EC2 Instance
+│   ├── Jenkins Security Group
+│   └── Terraform Outputs
+│
+├── phase-7-terraform-modules/   🚧 in progress
 └── phase-8-production-infrastructure/
 ```
 
@@ -153,17 +157,26 @@ terraform init -migrate-state
 
 </details>
 
+**Load Balancing & Scaling (Phase 5)**
+- Application Load Balancer (ALB) · Target Groups
+- Launch Templates · Auto Scaling Groups
+- Dynamic Scaling Policies · High Availability Design
+
+**CI/CD Infrastructure (Phase 6)**
+- Dedicated Jenkins Server Provisioning
+- CI/CD-Specific Security Group Configuration
+- Infrastructure/Configuration Separation
+
+</details>
+
 <details open>
-<summary><strong>🚧 Currently Learning — Phase 5</strong></summary>
+<summary><strong>🚧 Currently Learning — Phase 7</strong></summary>
 
 <br>
 
-- Application Load Balancer (ALB)
-- Target Groups
-- Launch Templates
-- Auto Scaling Groups
-- Dynamic Scaling Policies
-- High Availability Design
+- Terraform Modules
+- Reusable Infrastructure Patterns
+- Production Folder Structure
 
 </details>
 
@@ -172,12 +185,11 @@ terraform init -migrate-state
 
 <br>
 
-- Modules · Workspaces
+- Workspaces
 - `count` · `for_each` · Dynamic Blocks
 - Data Sources
 - Multi-Environment Deployments
-- Production Folder Structure
-- Reusable Infrastructure Patterns
+- Automated Jenkins Setup (Ansible)
 
 </details>
 
@@ -236,14 +248,19 @@ Created and managed:
 - Multiple Outputs
 - Multi-Server Architecture & Role Separation
 
-### 🚧 Phase 5 — Load Balancer and Auto Scaling *(in progress)*
-Working on:
-- Application Load Balancer (ALB) setup
+### ✅ Phase 5 — Load Balancer and Auto Scaling
+Created and managed:
+- Application Load Balancer (ALB)
 - Target Groups for routing traffic across instances
 - Launch Templates for standardized instance configuration
 - Auto Scaling Groups for elastic, high-availability infrastructure
 
-> 📝 This section will be updated with details and code as the phase progresses.
+### ✅ Phase 6 — Jenkins Server Infrastructure
+Created and managed:
+- Dedicated Jenkins EC2 Instance
+- Jenkins Security Group (SSH + Jenkins UI access)
+- Terraform Outputs for IP, URL, and SSH command
+- Infrastructure foundation prepared for future CI/CD setup (`02-jenkins`, `03-ansible`)
 
 ---
 
@@ -258,7 +275,9 @@ Remote State Management
         ↓
 Multi-Server Infrastructure
         ↓
-Load Balancing & Scaling   ← currently here
+Load Balancing & Scaling
+        ↓
+CI/CD Infrastructure (Jenkins)   ← currently here
         ↓
 Production-Grade Deployments
 ```
@@ -278,15 +297,13 @@ Production-Grade Deployments
 - Security Groups can be shared across multiple EC2 instances.
 - Terraform can provision multiple resources in a single deployment.
 - Outputs simplify access to infrastructure details after deployment.
-- Load balancing and auto scaling are key to building highly available systems *(new, Phase 5)*.
+- Load balancing and auto scaling are key to building highly available systems.
+- Infrastructure provisioning and software configuration should be kept separate *(new, Phase 6)*.
+- Security Groups can be tailored precisely to a service's access needs, such as Jenkins' SSH and UI ports *(new, Phase 6)*.
 
 ---
 
 ## 🔜 What's Next
-
-### Phase 6 — Jenkins Infrastructure
-- Dedicated CI/CD server provisioning
-- Jenkins-specific networking and security rules
 
 ### Phase 7 — Terraform Modules
 - Refactoring existing phases into reusable modules
