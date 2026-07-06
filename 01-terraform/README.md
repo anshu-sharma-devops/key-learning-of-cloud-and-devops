@@ -1,48 +1,80 @@
+<div align="center">
+
 # ☁️ Terraform Learning Journey
 
-Part of my **Key Learning of Cloud and DevOps** repository, this section documents my journey of learning **Infrastructure as Code (IaC)** using Terraform on AWS.
+### Infrastructure as Code (IaC) on AWS
 
-Terraform allows infrastructure to be defined, version controlled, and deployed using code instead of manually creating resources through the AWS Console.
+*Part of the **Key Learning of Cloud & DevOps** repository*
+
+[![Terraform](https://img.shields.io/badge/Terraform-IaC-844FBA?style=flat-square&logo=terraform&logoColor=white)](https://www.terraform.io/)
+[![AWS](https://img.shields.io/badge/Cloud-AWS-FF9900?style=flat-square&logo=amazonaws&logoColor=white)](https://aws.amazon.com/)
+[![Status](https://img.shields.io/badge/Status-In%20Progress-yellow?style=flat-square)]()
+[![Last Updated](https://img.shields.io/badge/Last%20Updated-July%202026-blue?style=flat-square)]()
+
+</div>
+
+---
+
+Terraform lets infrastructure be defined, version-controlled, and deployed as code — instead of clicking through the AWS Console. This repo documents that journey, phase by phase, from a single EC2 instance to production-grade, auto-scaling infrastructure.
+
+> 📝 **This is a living document.** It's updated as each new phase is completed, so check back for progress.
+
+---
+
+## 📑 Table of Contents
+
+- [Learning Objectives](#-learning-objectives)
+- [Tech Stack](#️-tech-stack)
+- [Roadmap](#-roadmap)
+- [Repository Structure](#-repository-structure)
+- [Terraform Workflow](#-terraform-workflow)
+- [Concepts Covered](#-concepts-covered)
+- [Progress Log](#-progress-log)
+- [Key Learnings](#-key-learnings)
+- [What's Next](#-whats-next)
+- [Author](#-author)
 
 ---
 
 ## 🎯 Learning Objectives
 
-- Learn Infrastructure as Code (IaC)
-- Provision AWS infrastructure using Terraform
-- Understand Terraform state management
-- Build reusable and scalable infrastructure
-- Follow production-grade infrastructure practices
-- Move from single EC2 deployments to complete cloud environments
+- Learn Infrastructure as Code (IaC) principles and practice
+- Provision real AWS infrastructure using Terraform
+- Understand and manage Terraform state (local → remote)
+- Build reusable, scalable, and production-grade infrastructure
+- Progress from single-instance deployments to full cloud environments
 
 ---
 
-## 🛠️ Technologies Used
+## 🛠️ Tech Stack
 
 | Category | Technology |
-|----------|------------|
-| Cloud Provider | AWS |
-| Infrastructure as Code | Terraform |
-| Version Control | Git |
-| Repository | GitHub |
-| Code Editor | VS Code |
-| Operating System | macOS |
-| Terminal | zsh |
+|---|---|
+| ☁️ Cloud Provider | AWS |
+| 🧱 Infrastructure as Code | Terraform |
+| 🔧 Version Control | Git |
+| 📦 Repository Hosting | GitHub |
+| 💻 Code Editor | VS Code |
+| 🖥️ Operating System | macOS |
+| ⌨️ Terminal | zsh |
 
 ---
 
-## 📚 Terraform Learning Roadmap
+## 🗺️ Roadmap
 
 | Phase | Topic | Status |
-|-------|-------|--------|
-| Phase 1 | Basic EC2 Deployment | ✅ Completed |
-| Phase 2 | VPC and Networking | ✅ Completed |
-| Phase 3 | Remote State Management | ✅ Completed |
-| Phase 4 | Multi-EC2 Infrastructure | 🔜 Planned |
-| Phase 5 | Load Balancer and Auto Scaling | 🔜 Planned |
-| Phase 6 | Jenkins Infrastructure | 🔜 Planned |
-| Phase 7 | Terraform Modules | 🔜 Planned |
-| Phase 8 | Production Infrastructure | 🔜 Planned |
+|:---:|---|:---:|
+| 1 | Basic EC2 Deployment | ✅ Completed |
+| 2 | VPC & Networking | ✅ Completed |
+| 3 | Remote State Management | ✅ Completed |
+| 4 | Multi-EC2 Infrastructure | ✅ Completed |
+| 5 | Load Balancer & Auto Scaling | 🔄 In Progress |
+| 6 | Jenkins Infrastructure | 🔜 Planned |
+| 7 | Terraform Modules | 🔜 Planned |
+| 8 | Production Infrastructure | 🔜 Planned |
+
+**Progress: 4 / 8 phases complete**
+`████████████████░░░░░░░░░░░░░░` **50%**
 
 ---
 
@@ -57,16 +89,15 @@ Terraform allows infrastructure to be defined, version controlled, and deployed 
 │   ├── Terraform Fundamentals
 │   ├── EC2 Deployment
 │   ├── Security Groups
-│   └── Variables and Outputs
+│   └── Variables & Outputs
 │
 ├── phase-2-vpc-networking/
 │   ├── VPC
 │   ├── Public Subnet
 │   ├── Internet Gateway
-│   ├── Route Tables
-│   ├── Route Table Associations
+│   ├── Route Tables & Associations
 │   ├── Security Groups
-│   └── EC2 Deployment in Custom Network
+│   └── EC2 in Custom Network
 │
 ├── phase-3-remote-state/
 │   ├── S3 Backend
@@ -76,78 +107,17 @@ Terraform allows infrastructure to be defined, version controlled, and deployed 
 │   └── Remote State Migration
 │
 ├── phase-4-multi-ec2/
+│   ├── Multiple EC2 Instances
+│   ├── Shared Security Groups
+│   ├── Resource Dependencies
+│   ├── Terraform Outputs
+│   └── Multi-Server Architecture
 │
-├── phase-5-load-balancer-autoscaling/
-│
-├── phase-6-jenkins-infrastructure/
-│
-├── phase-7-terraform-modules/
-│
-└── phase-8-production-infrastructure/
+├── phase-5-load-balancer-autoscaling/   🔄
+├── phase-6-jenkins-infrastructure/      🔜
+├── phase-7-terraform-modules/           🔜
+└── phase-8-production-infrastructure/   🔜
 ```
-
----
-
-## 🧠 Terraform Concepts Covered
-
-### ✅ Completed
-
-#### Core Terraform Concepts
-- Providers
-- Resources
-- Variables
-- Outputs
-- Terraform State
-- Remote State
-- Backend Configuration
-- State Migration
-- State Locking
-
-#### AWS Networking Concepts
-- VPC
-- Subnets
-- Internet Gateway
-- Route Tables
-- Route Table Associations
-- Security Groups
-
-#### AWS Services Used
-- EC2
-- S3
-- DynamoDB
-
-#### Terraform Commands
-- `terraform init`
-- `terraform validate`
-- `terraform fmt`
-- `terraform plan`
-- `terraform apply`
-- `terraform output`s
-- `terraform destroy`
-- `terraform init -reconfigure`
-- `terraform init -migrate-state`
-
----
-
-### 🔄 Currently Learning
-
-- Multi-EC2 Infrastructure
-- Resource Dependencies
-- Infrastructure Scaling Patterns
-
----
-
-### 🔜 Upcoming Concepts
-
-- Modules
-- Workspaces
-- `count`
-- `for_each`
-- Dynamic Blocks
-- Data Sources
-- Multi-Environment Deployments
-- Production Folder Structure
-- Reusable Infrastructure Patterns
 
 ---
 
@@ -156,113 +126,166 @@ Terraform allows infrastructure to be defined, version controlled, and deployed 
 ```text
 Write Terraform Code
         ↓
-terraform init
+terraform init          → initialize backend & providers
         ↓
-terraform validate
+terraform validate       → check syntax & config
         ↓
-terraform plan
+terraform fmt            → format code consistently
         ↓
-terraform apply
+terraform plan            → preview changes
         ↓
-Infrastructure Created
+terraform apply            → create infrastructure
         ↓
-terraform destroy
+terraform output             → retrieve resource details
+        ↓
+terraform destroy              → tear down when done
 ```
 
 ---
 
-## 📈 Current Progress
+## 🧠 Concepts Covered
+
+<details>
+<summary><b>✅ Core Terraform Concepts</b></summary>
+<br>
+
+- Providers, Resources, Variables, Outputs
+- Terraform State & Remote State
+- Backend Configuration & State Migration
+- State Locking
+- Resource Dependencies
+- Multi-Resource Deployments
+
+</details>
+
+<details>
+<summary><b>✅ AWS Networking Concepts</b></summary>
+<br>
+
+- VPC & Subnets
+- Internet Gateway
+- Route Tables & Route Table Associations
+- Security Groups
+
+</details>
+
+<details>
+<summary><b>✅ AWS Services Used</b></summary>
+<br>
+
+- EC2
+- S3
+- DynamoDB
+
+</details>
+
+<details>
+<summary><b>✅ Infrastructure Concepts</b></summary>
+<br>
+
+- Multi-EC2 Infrastructure
+- Shared Security Groups
+- Server Role Separation
+- Multi-Server Architecture
+
+</details>
+
+<details>
+<summary><b>✅ Terraform Commands</b></summary>
+<br>
+
+`terraform init` · `terraform validate` · `terraform fmt` · `terraform plan` · `terraform apply` · `terraform output` · `terraform destroy` · `terraform init -reconfigure` · `terraform init -migrate-state`
+
+</details>
+
+<details>
+<summary><b>🔄 Currently Learning</b></summary>
+<br>
+
+- Load Balancing
+- Auto Scaling
+- High Availability Design
+
+</details>
+
+<details>
+<summary><b>🔜 Upcoming Concepts</b></summary>
+<br>
+
+- Modules & Workspaces
+- `count` & `for_each`
+- Dynamic Blocks
+- Data Sources
+- Launch Templates & Auto Scaling Groups
+- Application Load Balancer
+- Multi-Environment Deployments
+- Production Folder Structure & Reusable Patterns
+
+</details>
+
+---
+
+## 📈 Progress Log
 
 ### ✅ Phase 1 — Basic EC2 Deployment
+Created and managed: EC2 Instance · Security Group · Variables · Outputs · Terraform Lifecycle Commands
 
-Created and managed:
-
-- EC2 Instance
-- Security Group
-- Variables
-- Outputs
-- Terraform Lifecycle Commands
-
----
-
-### ✅ Phase 2 — VPC and Networking
-
-Created and managed:
-
-- Custom VPC
-- Public Subnet
-- Internet Gateway
-- Route Table
-- Route Table Association
-- Security Group
-- EC2 Instance inside Custom VPC
-
----
+### ✅ Phase 2 — VPC & Networking
+Created and managed: Custom VPC · Public Subnet · Internet Gateway · Route Table & Association · Security Group · EC2 Instance inside Custom VPC
 
 ### ✅ Phase 3 — Remote State Management
+Created and managed: S3 Backend Bucket · Bucket Versioning · DynamoDB Lock Table · Backend Configuration · Remote State Migration · State Locking
 
-Created and managed:
+### ✅ Phase 4 — Multi-EC2 Infrastructure
+Created and managed: Jenkins Server EC2 · Application Server EC2 · Shared Security Group · Multiple Outputs · Server Role Separation
 
-- S3 Backend Bucket
-- Bucket Versioning
-- DynamoDB Lock Table
-- Backend Configuration
-- Remote State Migration
-- State Locking
-- Remote State Storage
+### 🔄 Phase 5 — Load Balancer & Auto Scaling *(in progress)*
+Working on: Application Load Balancer · Target Groups · Auto Scaling Groups · Launch Templates · High Availability Design
 
 ---
 
-## 🎓 Learning Goal
+## 💡 Key Learnings
 
-The goal of this Terraform journey is to progress from:
+> Insights collected along the way — updated as new phases are completed.
 
+- Infrastructure can be fully defined, versioned, and repeated using code.
+- Networking resources can be provisioned entirely without the AWS Console.
+- Local state files don't scale to team environments — remote state is the production standard.
+- S3 gives centralized, durable state storage; DynamoDB prevents concurrent modifications via locking.
+- Infrastructure can be cleanly separated into dedicated server roles.
+- Security Groups can be shared across multiple EC2 instances to reduce duplication.
+- Terraform can provision multiple, interdependent resources in a single deployment.
+- Outputs make it easy to retrieve infrastructure details after `apply`.
+
+---
+
+## 🔜 What's Next
+
+### Phase 5 — Load Balancer & Auto Scaling
+- Application Load Balancer (ALB)
+- Target Groups
+- Auto Scaling Groups & Launch Templates
+- High Availability Architecture
+- Dynamic Scaling Policies
+
+### Looking further ahead
 ```text
-Single EC2 Instance
-        ↓
-Custom Networking
-        ↓
-Remote State Management
-        ↓
 Multi-Server Infrastructure
         ↓
-Load Balancing
+Load Balancing & Auto Scaling   ← you are here
+        ↓
+Terraform Modules
         ↓
 Production-Grade Deployments
 ```
 
 ---
 
-## 📌 Key Learnings So Far
-
-- Infrastructure can be fully defined using code.
-- Terraform provides repeatable and predictable deployments.
-- Networking resources can be provisioned without using the AWS Console.
-- Local state files are not suitable for team environments.
-- S3 provides centralized and durable Terraform state storage.
-- DynamoDB prevents concurrent infrastructure modifications.
-- Remote state management is a production standard in Terraform environments.
-
----
-
-## 🔜 Next Phase
-
-### Phase 4 — Multi-EC2 Infrastructure
-
-Upcoming topics:
-
-- Multiple EC2 Instances
-- Shared Security Groups
-- Resource Dependencies
-- `count`
-- `for_each`
-- Reusable Infrastructure Patterns
-
----
-
 ## 👨‍💻 Author
 
-**Anshu Sharma**  
+**Anshu Sharma**
 Cloud & DevOps Learning Journey
 
-GitHub: https://github.com/anshu-sharma-devops
+[![GitHub](https://img.shields.io/badge/GitHub-anshu--sharma--devops-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/anshu-sharma-devops)
+
+<sub>⭐ If you're following a similar learning path, feel free to fork this structure for your own journey.</sub>
