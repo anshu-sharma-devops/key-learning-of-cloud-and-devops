@@ -1,267 +1,62 @@
-# 🌐 Phase 2 - Custom VPC and Networking using Terraform
+# 🌐 Phase 2 — VPC and Networking
 
-This project demonstrates how to build a custom AWS networking environment using Terraform instead of relying on AWS default networking resources.
-
-This is the second phase of my Terraform learning journey and focuses on creating the foundational networking components required for real-world cloud infrastructure deployments.
+Part of the [Terraform Learning Journey](../README.md) — *Key Learning of Cloud and DevOps*
 
 ---
 
-## 🎯 Objectives
+## 🎯 Objective
 
-- Learn AWS networking fundamentals
-- Create a custom VPC using Terraform
-- Configure public networking resources
-- Understand routing and internet connectivity
-- Deploy an EC2 instance inside a custom VPC
-- Learn resource dependencies in Terraform
+Move beyond the AWS default VPC and learn to design and provision a custom network from scratch — the foundation every real-world AWS deployment is built on.
 
----
+## 🏗️ What Was Built
 
-## 🛠️ Technologies Used
+- A **custom VPC** with a defined CIDR block
+- A **public subnet** inside the VPC
+- An **Internet Gateway** attached to the VPC for outbound/inbound internet access
+- A **Route Table** with a route to the Internet Gateway
+- A **Route Table Association** linking the subnet to the route table
+- A **Security Group** scoped to the custom network
+- An **EC2 instance** deployed inside the custom VPC/subnet (instead of the default VPC from Phase 1)
 
-| Category | Technology |
-|----------|------------|
-| Cloud Provider | AWS |
-| Infrastructure as Code | Terraform |
-| Networking | VPC, Subnet, Route Table, Internet Gateway |
-| Compute | EC2 |
-| Security | Security Groups |
-| Version Control | Git & GitHub |
-| Editor | VS Code |
-| Operating System | macOS |
+## 🧠 Concepts Covered
 
----
+- VPC and subnet design
+- Internet Gateways and public connectivity
+- Route tables and route table associations
+- Deploying compute resources inside custom networking
 
-## 🏗️ Infrastructure Created
-
-The following AWS resources were provisioned:
-
-- VPC
-- Public Subnet
-- Internet Gateway
-- Route Table
-- Route Table Association
-- Security Group
-- EC2 Instance
-
----
-
-## 📐 Architecture
-
-```text
-Internet
-   │
-   ▼
-Internet Gateway
-   │
-   ▼
-VPC (10.0.0.0/16)
-   │
-   ▼
-Public Subnet (10.0.1.0/24)
-   │
-   ▼
-Security Group
-   │
-   ▼
-EC2 Instance
-```
-
----
-
-## 📂 Project Structure
-
-```text
-phase-2-vpc-networking/
-│
-├── provider.tf
-├── variables.tf
-├── main.tf
-├── outputs.tf
-├── README.md
-├── terraform.tfstate
-├── terraform.tfstate.backup
-└── screenshots/
-```
-
----
-
-## 📋 Terraform Commands Used
-
-### Initialize Terraform
+## 🔧 Commands Used
 
 ```bash
 terraform init
-```
-
-Downloads the required Terraform providers and initializes the working directory.
-
----
-
-### Validate Configuration
-
-```bash
 terraform validate
-```
-
-Checks the Terraform configuration for syntax errors and consistency.
-
----
-
-### Preview Infrastructure Changes
-
-```bash
+terraform fmt
 terraform plan
-```
-
-Displays the resources Terraform will create before making any changes.
-
----
-
-### Create Infrastructure
-
-```bash
 terraform apply
-```
-
-Creates all networking resources and provisions the EC2 instance.
-
----
-
-### View Outputs
-
-```bash
 terraform output
-```
-
-Displays useful deployment information such as:
-
-- VPC ID
-- Subnet ID
-- Security Group ID
-- Instance ID
-- Public IP Address
-- SSH Command
-
----
-
-### Destroy Infrastructure
-
-```bash
 terraform destroy
 ```
 
-Deletes all resources managed by Terraform.
-
----
-
-## 📸 Screenshots
-
-### Terraform Plan
-Preview of the infrastructure that Terraform planned to create.
-
-### Terraform Apply
-Successful creation of AWS infrastructure.
-
-### VPC Created in AWS
-Custom VPC successfully created.
-
-### Public Subnet
-Public subnet created inside the VPC.
-
-### Internet Gateway Attached
-Internet Gateway attached to the VPC for internet access.
-
-### Route Table Configuration
-Route table configured with:
+## 📂 Structure
 
 ```text
-0.0.0.0/0 → Internet Gateway
+phase-2-vpc-networking/
+├── main.tf          # VPC, subnet, IGW, route table, EC2, security group
+├── variables.tf      # CIDR blocks, region, instance settings
+└── outputs.tf         # VPC ID, subnet ID, instance public IP
 ```
 
-### Security Group Rules
-Inbound rules configured for:
+## 📌 Key Learnings
 
-- SSH (22)
-- HTTP (80)
+- Networking resources can be fully provisioned without touching the AWS Console.
+- A route table + Internet Gateway is what actually makes a subnet "public" — the subnet itself has no inherent internet access.
+- Explicit route table associations are required; Terraform (like AWS) doesn't auto-attach subnets to route tables.
+- Building the network first makes every later phase (multi-EC2, load balancing, Jenkins) more predictable and secure.
 
-### EC2 Instance Running
-EC2 instance deployed inside the custom VPC.
+## ➡️ Next
 
-### SSH Connection
-Successful SSH access to the EC2 instance.
-
-### Terraform Destroy
-All infrastructure successfully removed.
+Continue to [Phase 3 — Remote State Management](../phase-3-remote-state/README.md), where local `.tfstate` files are replaced with a shared, locked, S3-backed backend.
 
 ---
 
-## 🐞 Errors and Fixes
-
-| Error | Root Cause | Fix |
-|-------|------------|-----|
-| No issues recorded yet | - | - |
-
----
-
-## 📚 Terraform Concepts Covered
-
-### Networking Concepts
-
-- VPC
-- CIDR Blocks
-- Public Subnets
-- Internet Gateway
-- Route Tables
-- Route Table Associations
-- Security Groups
-
-### Terraform Concepts
-
-- Resource Dependencies
-- Variables
-- Outputs
-- Resource References
-- Terraform State
-
----
-
-## 🎓 Key Learnings
-
-- AWS networking can be fully defined using code.
-- Public subnets require an Internet Gateway and proper routing.
-- Security Groups control inbound and outbound traffic.
-- Terraform automatically manages resource dependencies.
-- Infrastructure can be consistently recreated from code.
-
----
-
-## 📈 Phase Summary
-
-In this phase I learned how to:
-
-- Build a custom VPC from scratch
-- Configure internet connectivity
-- Create and associate route tables
-- Deploy EC2 instances into custom networks
-- Manage infrastructure dependencies using Terraform
-
----
-
-## ⏭️ Next Phase
-
-The next phase focuses on:
-
-- Remote State Management
-- S3 Backend Configuration
-- DynamoDB State Locking
-- Team Collaboration Workflows
-
----
-
-## 👨‍💻 Author
-
-**Anshu Sharma**  
-Cloud & DevOps Learning Journey
-
-GitHub: https://github.com/anshu-sharma-devops
+⬅ [Back to main Terraform Learning Journey README](../README.md)
