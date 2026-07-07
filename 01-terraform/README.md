@@ -76,16 +76,16 @@ flowchart LR
 
 ## 🗺️ Terraform Learning Roadmap
 
-| Phase | Topic | Status |
-|---|---|:---:|
-| 1 | Basic EC2 Deployment | ✅ Completed |
-| 2 | VPC and Networking | ✅ Completed |
-| 3 | Remote State Management | ✅ Completed |
-| 4 | Multi-EC2 Infrastructure | ✅ Completed |
-| 5 | Load Balancer and Auto Scaling | ✅ Completed |
-| 6 | Jenkins Infrastructure | ✅ Completed |
-| 7 | Terraform Modules | ✅ Completed |
-| 8 | Production Infrastructure | 🔜 Planned |
+| Phase | Topic | Status | Write-up |
+|---|---|:---:|---|
+| 1 | Basic EC2 Deployment | ✅ Completed | [README](./phase-1-basic-ec2/README.md) |
+| 2 | VPC and Networking | ✅ Completed | [README](./phase-2-vpc-networking/README.md) |
+| 3 | Remote State Management | ✅ Completed | [README](./phase-3-remote-state/README.md) |
+| 4 | Multi-EC2 Infrastructure | ✅ Completed | [README](./phase-4-multi-ec2/README.md) |
+| 5 | Load Balancer and Auto Scaling | ✅ Completed | [README](./phase-5-load-balancer-autoscaling/README.md) |
+| 6 | Jenkins Infrastructure | ✅ Completed | [README](./phase-6-jenkins-infrastructure/README.md) |
+| 7 | Terraform Modules | ✅ Completed | [README](./phase-7-terraform-modules/README.md) |
+| 8 | Production Infrastructure | 🔜 Planned | — |
 
 **Progress: 7 of 8 phases complete**
 
@@ -114,12 +114,14 @@ pie showData
 ├── README.md
 │
 ├── phase-1-basic-ec2/
+│   ├── README.md
 │   ├── Terraform Fundamentals
 │   ├── EC2 Deployment
 │   ├── Security Groups
 │   └── Variables and Outputs
 │
 ├── phase-2-vpc-networking/
+│   ├── README.md
 │   ├── VPC
 │   ├── Public Subnet
 │   ├── Internet Gateway
@@ -129,6 +131,7 @@ pie showData
 │   └── EC2 Deployment in Custom Network
 │
 ├── phase-3-remote-state/
+│   ├── README.md
 │   ├── S3 Backend
 │   ├── S3 Versioning
 │   ├── DynamoDB State Locking
@@ -136,6 +139,7 @@ pie showData
 │   └── Remote State Migration
 │
 ├── phase-4-multi-ec2/
+│   ├── README.md
 │   ├── Multiple EC2 Instances
 │   ├── Shared Security Groups
 │   ├── Resource Dependencies
@@ -143,17 +147,20 @@ pie showData
 │   └── Multi-Server Architecture
 │
 ├── phase-5-load-balancer-autoscaling/
+│   ├── README.md
 │   ├── Application Load Balancer
 │   ├── Target Groups
 │   ├── Launch Templates
 │   └── Auto Scaling Groups
 │
 ├── phase-6-jenkins-infrastructure/
+│   ├── README.md
 │   ├── Jenkins EC2 Instance
 │   ├── Jenkins Security Group
 │   └── Terraform Outputs
 │
 ├── phase-7-terraform-modules/
+│   ├── README.md
 │   ├── modules/
 │   │   ├── vpc/
 │   │   ├── security-group/
@@ -286,6 +293,8 @@ Created and managed:
 - Variables and Outputs
 - Terraform Lifecycle Commands
 
+📄 Full write-up: [`phase-1-basic-ec2/README.md`](./phase-1-basic-ec2/README.md)
+
 ### ✅ Phase 2 — VPC and Networking
 Created and managed:
 - Custom VPC · Public Subnet
@@ -293,12 +302,16 @@ Created and managed:
 - Security Group
 - EC2 Instance inside Custom VPC
 
+📄 Full write-up: [`phase-2-vpc-networking/README.md`](./phase-2-vpc-networking/README.md)
+
 ### ✅ Phase 3 — Remote State Management
 Created and managed:
 - S3 Backend Bucket + Versioning
 - DynamoDB Lock Table
 - Backend Configuration
 - Remote State Migration & Locking
+
+📄 Full write-up: [`phase-3-remote-state/README.md`](./phase-3-remote-state/README.md)
 
 ### ✅ Phase 4 — Multi-EC2 Infrastructure
 Created and managed:
@@ -308,6 +321,8 @@ Created and managed:
 - Multiple Outputs
 - Multi-Server Architecture & Role Separation
 
+📄 Full write-up: [`phase-4-multi-ec2/README.md`](./phase-4-multi-ec2/README.md)
+
 ### ✅ Phase 5 — Load Balancer and Auto Scaling
 Created and managed:
 - Application Load Balancer (ALB)
@@ -315,12 +330,16 @@ Created and managed:
 - Launch Templates for standardized instance configuration
 - Auto Scaling Groups for elastic, high-availability infrastructure
 
+📄 Full write-up: [`phase-5-load-balancer-autoscaling/README.md`](./phase-5-load-balancer-autoscaling/README.md)
+
 ### ✅ Phase 6 — Jenkins Server Infrastructure
 Created and managed:
 - Dedicated Jenkins EC2 Instance
 - Jenkins Security Group (SSH + Jenkins UI access)
 - Terraform Outputs for IP, URL, and SSH command
 - Infrastructure foundation prepared for future CI/CD setup (`02-jenkins`, `03-ansible`)
+
+📄 Full write-up: [`phase-6-jenkins-infrastructure/README.md`](./phase-6-jenkins-infrastructure/README.md)
 
 ### ✅ Phase 7 — Terraform Modules
 Refactored the Jenkins infrastructure from Phase 6 into a fully modular codebase:
