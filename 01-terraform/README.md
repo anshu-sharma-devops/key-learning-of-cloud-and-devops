@@ -9,6 +9,7 @@ Part of the **Key Learning of Cloud and DevOps** repository
 [![Terraform](https://img.shields.io/badge/Terraform-IaC-844FBA?logo=terraform&logoColor=white)](https://www.terraform.io/)
 [![AWS](https://img.shields.io/badge/AWS-Cloud-FF9900?logo=amazon-aws&logoColor=white)](https://aws.amazon.com/)
 [![Status](https://img.shields.io/badge/Status-Actively%20Updated-brightgreen)]()
+[![Phases Completed](https://img.shields.io/badge/Phases%20Completed-7%2F8-blue)]()
 
 </div>
 
@@ -18,9 +19,25 @@ Part of the **Key Learning of Cloud and DevOps** repository
 
 This repository documents my hands-on path to learning **Infrastructure as Code** with Terraform on AWS — replacing manual, click-through console setups with version-controlled, repeatable, and scalable infrastructure defined entirely in code.
 
-Each phase builds on the last: starting with a single EC2 instance, then adding networking, remote state, multi-server architecture, and eventually scaling into highly available, production-ready deployments.
+Each phase builds on the last: starting with a single EC2 instance, then adding networking, remote state, multi-server architecture, load balancing, CI/CD infrastructure, and now **reusable Terraform modules** — with production-grade, multi-environment deployments as the final destination.
 
 > 🔄 **This is a living repository** — new phases are added as I progress. Check back for updates.
+
+```mermaid
+flowchart LR
+    P1["Phase 1<br/>Basic EC2"] --> P2["Phase 2<br/>VPC & Networking"]
+    P2 --> P3["Phase 3<br/>Remote State"]
+    P3 --> P4["Phase 4<br/>Multi-EC2"]
+    P4 --> P5["Phase 5<br/>LB & Auto Scaling"]
+    P5 --> P6["Phase 6<br/>Jenkins Infra"]
+    P6 --> P7["Phase 7<br/>Terraform Modules"]
+    P7 --> P8["Phase 8<br/>Production Infra"]
+
+    classDef done fill:#16a34a,stroke:#14532d,color:#fff,font-weight:bold;
+    classDef next fill:#f1f5f9,stroke:#64748b,color:#334155,stroke-dasharray: 4 4;
+    class P1,P2,P3,P4,P5,P6,P7 done;
+    class P8 next;
+```
 
 ---
 
@@ -31,7 +48,7 @@ Each phase builds on the last: starting with a single EC2 instance, then adding 
 - Understand and manage Terraform state
 - Build reusable, scalable infrastructure patterns
 - Follow production-grade infrastructure practices
-- Progress from single-resource deployments to complete cloud environments
+- Progress from single-resource deployments to complete, modular cloud environments
 
 ---
 
@@ -59,8 +76,17 @@ Each phase builds on the last: starting with a single EC2 instance, then adding 
 | 4 | Multi-EC2 Infrastructure | ✅ Completed |
 | 5 | Load Balancer and Auto Scaling | ✅ Completed |
 | 6 | Jenkins Infrastructure | ✅ Completed |
-| 7 | Terraform Modules | 🚧 In Progress |
+| 7 | Terraform Modules | ✅ Completed |
 | 8 | Production Infrastructure | 🔜 Planned |
+
+**Progress: 7 of 8 phases complete**
+
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'pie1':'#16a34a','pie2':'#e5e7eb'}}}%%
+pie showData
+    "Completed" : 7
+    "Planned" : 1
+```
 
 ---
 
@@ -111,8 +137,15 @@ Each phase builds on the last: starting with a single EC2 instance, then adding 
 │   ├── Jenkins Security Group
 │   └── Terraform Outputs
 │
-├── phase-7-terraform-modules/   🚧 in progress
-└── phase-8-production-infrastructure/
+├── phase-7-terraform-modules/
+│   ├── modules/
+│   │   ├── vpc/
+│   │   ├── security-group/
+│   │   └── ec2/
+│   ├── Root Module (main.tf)
+│   └── Modular Jenkins Deployment
+│
+└── phase-8-production-infrastructure/   🔜 planned
 ```
 
 ---
@@ -129,6 +162,7 @@ Each phase builds on the last: starting with a single EC2 instance, then adding 
 - Terraform State · Remote State · Backend Configuration
 - State Migration · State Locking
 - Resource Dependencies · Multi-Resource Deployments
+- **Terraform Modules · Root & Child Modules · Module Composition** *(new, Phase 7)*
 
 **AWS Networking Concepts**
 - VPC · Subnets · Internet Gateway
@@ -140,6 +174,7 @@ Each phase builds on the last: starting with a single EC2 instance, then adding 
 **Infrastructure Concepts**
 - Multi-EC2 Infrastructure · Shared Security Groups
 - Server Role Separation · Multi-Server Architecture
+- **Modular, DRY Infrastructure Design** *(new, Phase 7)*
 
 **Terraform Commands**
 
@@ -155,8 +190,6 @@ terraform init -reconfigure
 terraform init -migrate-state
 ```
 
-</details>
-
 **Load Balancing & Scaling (Phase 5)**
 - Application Load Balancer (ALB) · Target Groups
 - Launch Templates · Auto Scaling Groups
@@ -167,28 +200,24 @@ terraform init -migrate-state
 - CI/CD-Specific Security Group Configuration
 - Infrastructure/Configuration Separation
 
-</details>
-
-<details open>
-<summary><strong>🚧 Currently Learning — Phase 7</strong></summary>
-
-<br>
-
-- Terraform Modules
-- Reusable Infrastructure Patterns
-- Production Folder Structure
+**Terraform Modules (Phase 7)**
+- Converting monolithic configuration into reusable modules
+- Root Module vs. Child Module design
+- Passing variables into modules and returning values via outputs
+- Module-to-module communication (dependency graph)
+- Production-ready folder structure for modular projects
 
 </details>
 
 <details>
-<summary><strong>🔜 Upcoming Concepts</strong></summary>
+<summary><strong>🔜 Upcoming Concepts — Phase 8</strong></summary>
 
 <br>
 
 - Workspaces
 - `count` · `for_each` · Dynamic Blocks
 - Data Sources
-- Multi-Environment Deployments
+- Multi-Environment Deployments (dev / staging / prod)
 - Automated Jenkins Setup (Ansible)
 
 </details>
@@ -197,22 +226,29 @@ terraform init -migrate-state
 
 ## 🚀 Terraform Workflow
 
-```text
-Write Terraform Code
-        ↓
-terraform init
-        ↓
-terraform validate
-        ↓
-terraform plan
-        ↓
-terraform apply
-        ↓
-Infrastructure Created
-        ↓
-terraform output
-        ↓
-terraform destroy
+```mermaid
+flowchart TD
+    A["Write Terraform Code"] --> B["terraform init"]
+    B --> C["terraform validate"]
+    C --> D["terraform fmt"]
+    D --> E["terraform plan"]
+    E --> F{"Plan approved?"}
+    F -- No --> A
+    F -- Yes --> G["terraform apply"]
+    G --> H["Infrastructure Created"]
+    H --> I["terraform output"]
+    I --> J["terraform destroy<br/>(when finished)"]
+
+    style A fill:#ede9fe,stroke:#7c3aed
+    style B fill:#dbeafe,stroke:#2563eb
+    style C fill:#dbeafe,stroke:#2563eb
+    style D fill:#dbeafe,stroke:#2563eb
+    style E fill:#fef3c7,stroke:#d97706
+    style F fill:#fef3c7,stroke:#d97706
+    style G fill:#dcfce7,stroke:#16a34a
+    style H fill:#dcfce7,stroke:#16a34a
+    style I fill:#dcfce7,stroke:#16a34a
+    style J fill:#fee2e2,stroke:#dc2626
 ```
 
 ---
@@ -262,25 +298,52 @@ Created and managed:
 - Terraform Outputs for IP, URL, and SSH command
 - Infrastructure foundation prepared for future CI/CD setup (`02-jenkins`, `03-ansible`)
 
+### ✅ Phase 7 — Terraform Modules
+Refactored the Jenkins infrastructure from Phase 6 into a fully modular codebase:
+
+```mermaid
+flowchart TB
+    Root["Root Module"] --> VPC["VPC Module"]
+    Root --> SG["Security Group Module"]
+    Root --> EC2["EC2 Module"]
+    VPC -. vpc_id .-> SG
+    VPC -. subnet_id .-> EC2
+    SG -. sg_id .-> EC2
+
+    classDef m fill:#4f46e5,stroke:#312e81,color:#fff,font-weight:bold;
+    class Root,VPC,SG,EC2 m;
+```
+
+- **VPC Module** — VPC, public subnet, Internet Gateway, route table & association
+- **Security Group Module** — Jenkins security group (ports 22, 80, 8080)
+- **EC2 Module** — Ubuntu Jenkins instance with User Data bootstrap script
+- **Root Module** — wires the three child modules together via inputs/outputs, keeping `main.tf` minimal
+- Diagnosed and fixed a Jenkins repo signing-key issue and a missing root-level output bug
+
+📄 Full write-up: [`phase-7-terraform-modules/README.md`](./phase-7-terraform-modules/README.md)
+
 ---
 
 ## 🎓 Learning Goal
 
-```text
-Single EC2 Instance
-        ↓
-Custom Networking
-        ↓
-Remote State Management
-        ↓
-Multi-Server Infrastructure
-        ↓
-Load Balancing & Scaling
-        ↓
-CI/CD Infrastructure (Jenkins)   ← currently here
-        ↓
-Production-Grade Deployments
+```mermaid
+flowchart LR
+    A["Single EC2<br/>Instance"] --> B["Custom<br/>Networking"]
+    B --> C["Remote State<br/>Management"]
+    C --> D["Multi-Server<br/>Infrastructure"]
+    D --> E["Load Balancing<br/>& Scaling"]
+    E --> F["CI/CD Infra<br/>(Jenkins)"]
+    F --> G["Reusable<br/>Modules"]
+    G --> H["Production-Grade<br/>Deployments"]
+
+    classDef done fill:#16a34a,stroke:#14532d,color:#fff;
+    classDef current fill:#f59e0b,stroke:#92400e,color:#fff,font-weight:bold;
+    classDef next fill:#e2e8f0,stroke:#64748b,color:#334155,stroke-dasharray: 4 4;
+    class A,B,C,D,E,F,G done;
+    class H next;
 ```
+
+**Currently here:** ✅ Modules complete → next stop is **Phase 8: Production Infrastructure**
 
 ---
 
@@ -298,20 +361,20 @@ Production-Grade Deployments
 - Terraform can provision multiple resources in a single deployment.
 - Outputs simplify access to infrastructure details after deployment.
 - Load balancing and auto scaling are key to building highly available systems.
-- Infrastructure provisioning and software configuration should be kept separate *(new, Phase 6)*.
-- Security Groups can be tailored precisely to a service's access needs, such as Jenkins' SSH and UI ports *(new, Phase 6)*.
+- Infrastructure provisioning and software configuration should be kept separate.
+- Security Groups can be tailored precisely to a service's access needs, such as Jenkins' SSH and UI ports.
+- **Terraform Modules turn infrastructure into reusable, composable building blocks** *(new, Phase 7)*.
+- **Child module outputs must be explicitly re-exported at the root level to be visible via `terraform output`** *(new, Phase 7)*.
+- **A well-designed Root Module stays thin — most of the logic lives inside child modules** *(new, Phase 7)*.
 
 ---
 
 ## 🔜 What's Next
 
-### Phase 7 — Terraform Modules
-- Refactoring existing phases into reusable modules
-- Building a modular, DRY infrastructure codebase
-
 ### Phase 8 — Production Infrastructure
-- Multi-environment setups (dev / staging / prod)
+- Multi-environment setups (dev / staging / prod) built on top of the Phase 7 modules
 - Production-grade folder structure and best practices
+- Introducing Terraform Workspaces, `for_each`, and data sources
 
 ---
 
