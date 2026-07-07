@@ -47,6 +47,14 @@ This project demonstrates how professional DevOps teams structure Terraform code
 ## Architecture
 
 ```mermaid
+%%{init:{
+"theme":"base",
+"themeVariables":{
+"primaryTextColor":"#111827",
+"lineColor":"#475569",
+"background":"transparent"
+}}}%%
+
 flowchart TB
     Root["Root Module<br/>(main.tf)"]
 
@@ -62,8 +70,8 @@ flowchart TB
     VPC -. subnet_id .-> EC2
     SG -. sg_id .-> EC2
 
-    classDef module fill:#4f46e5,stroke:#312e81,color:#fff,font-weight:bold;
-    classDef resource fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b;
+    classDef module fill:#93C5FD,stroke:#1D4ED8,color:#111827,stroke-width:2px,font-weight:bold;
+    classDef resource fill:#E0E7FF,stroke:#4F46E5,color:#111827,stroke-width:2px;
     class Root,VPC,SG,EC2 module;
     class VPCRes,SGRes,EC2Res resource;
 ```
@@ -114,6 +122,14 @@ phase-7-terraform-modules/
 ### Network Topology
 
 ```mermaid
+%%{init:{
+"theme":"base",
+"themeVariables":{
+"primaryTextColor":"#111827",
+"lineColor":"#475569",
+"background":"transparent"
+}}}%%
+
 graph LR
     Internet(("Internet"))
     IGW["Internet Gateway"]
@@ -130,13 +146,13 @@ graph LR
     Subnet --> SG
     SG --> EC2
 
-    style Internet fill:#fef3c7,stroke:#d97706
-    style IGW fill:#dbeafe,stroke:#2563eb
-    style RT fill:#dbeafe,stroke:#2563eb
-    style VPC_box fill:#f3f4f6,stroke:#6b7280,stroke-dasharray: 5 5
-    style Subnet fill:#dcfce7,stroke:#16a34a
-    style SG fill:#fee2e2,stroke:#dc2626
-    style EC2 fill:#ede9fe,stroke:#7c3aed
+    style Internet fill:#FCD34D,stroke:#D97706,color:#111827,stroke-width:2px
+    style IGW fill:#93C5FD,stroke:#2563EB,color:#111827,stroke-width:2px
+    style RT fill:#93C5FD,stroke:#2563EB,color:#111827,stroke-width:2px
+    style VPC_box fill:#E5E7EB,stroke:#4B5563,color:#111827,stroke-width:2px,stroke-dasharray: 5 5
+    style Subnet fill:#86EFAC,stroke:#16A34A,color:#111827,stroke-width:2px
+    style SG fill:#FCA5A5,stroke:#DC2626,color:#111827,stroke-width:2px
+    style EC2 fill:#C4B5FD,stroke:#7C3AED,color:#111827,stroke-width:2px
 ```
 
 Traffic flows from the internet through the Internet Gateway, into the public subnet via the route table, and finally through the security group's allow-list before reaching the Jenkins instance.
@@ -214,6 +230,14 @@ Provisions the Jenkins server itself. It depends on outputs from both the VPC mo
 Modules never hardcode each other's values. Instead, a **child module** exposes data through its `outputs.tf`, and the **root module** passes that data into the next module as an input variable.
 
 ```mermaid
+%%{init:{
+"theme":"base",
+"themeVariables":{
+"primaryTextColor":"#111827",
+"lineColor":"#475569",
+"background":"transparent"
+}}}%%
+
 sequenceDiagram
     participant Root as Root Module
     participant VPC as VPC Module
@@ -254,6 +278,14 @@ The Security Group module receives the VPC ID directly from the VPC module's out
 The Root Module (`main.tf` at the project root) coordinates deployment by calling each child module and wiring their outputs together:
 
 ```mermaid
+%%{init:{
+"theme":"base",
+"themeVariables":{
+"primaryTextColor":"#111827",
+"lineColor":"#475569",
+"background":"transparent"
+}}}%%
+
 flowchart LR
     A["main.tf<br/>(Root Module)"] --> B["module &quot;vpc&quot;"]
     A --> C["module &quot;security_group&quot;"]
@@ -262,8 +294,8 @@ flowchart LR
     B -.output.-> D
     C -.output.-> D
 
-    classDef root fill:#1e293b,stroke:#0f172a,color:#fff;
-    classDef child fill:#f1f5f9,stroke:#334155,color:#0f172a;
+    classDef root fill:#93C5FD,stroke:#1D4ED8,color:#111827,stroke-width:2px,font-weight:bold;
+    classDef child fill:#E0E7FF,stroke:#475569,color:#111827,stroke-width:2px;
     class A root;
     class B,C,D child;
 ```
@@ -326,6 +358,14 @@ terraform destroy     # Destroy infrastructure
 ## Deployment Walkthrough
 
 ```mermaid
+%%{init:{
+"theme":"base",
+"themeVariables":{
+"primaryTextColor":"#111827",
+"lineColor":"#475569",
+"background":"transparent"
+}}}%%
+
 flowchart TD
     S1["terraform init<br/>Download providers & init modules"] --> S2["terraform fmt<br/>Auto-format code"]
     S2 --> S3["terraform validate<br/>Check syntax & config"]
@@ -337,15 +377,15 @@ flowchart TD
     S7 --> S8["Access Jenkins in browser<br/>http://public_ip:8080"]
     S8 --> S9["terraform destroy<br/>Tear down when done"]
 
-    style S1 fill:#dbeafe,stroke:#2563eb
-    style S2 fill:#dbeafe,stroke:#2563eb
-    style S3 fill:#dbeafe,stroke:#2563eb
-    style S4 fill:#fef3c7,stroke:#d97706
-    style S5 fill:#fef3c7,stroke:#d97706
-    style S6 fill:#dcfce7,stroke:#16a34a
-    style S7 fill:#dcfce7,stroke:#16a34a
-    style S8 fill:#ede9fe,stroke:#7c3aed
-    style S9 fill:#fee2e2,stroke:#dc2626
+    style S1 fill:#93C5FD,stroke:#2563EB,color:#111827,stroke-width:2px
+    style S2 fill:#93C5FD,stroke:#2563EB,color:#111827,stroke-width:2px
+    style S3 fill:#93C5FD,stroke:#2563EB,color:#111827,stroke-width:2px
+    style S4 fill:#FCD34D,stroke:#D97706,color:#111827,stroke-width:2px
+    style S5 fill:#FCD34D,stroke:#D97706,color:#111827,stroke-width:2px
+    style S6 fill:#86EFAC,stroke:#16A34A,color:#111827,stroke-width:2px
+    style S7 fill:#86EFAC,stroke:#16A34A,color:#111827,stroke-width:2px
+    style S8 fill:#C4B5FD,stroke:#7C3AED,color:#111827,stroke-width:2px
+    style S9 fill:#FCA5A5,stroke:#DC2626,color:#111827,stroke-width:2px
 ```
 
 Typical timeline: `init` and `fmt`/`validate` take a few seconds; `plan` runs almost instantly since it only reads AWS state; `apply` takes roughly 1–3 minutes, most of which is EC2 boot time and the Jenkins install script running via User Data.
@@ -388,6 +428,14 @@ Typical timeline: `init` and `fmt`/`validate` take a few seconds; `plan` runs al
 In production, infrastructure is rarely managed in a single Terraform file. Organizations instead build a shared module registry — often in its own Git repository — that multiple environments and teams consume:
 
 ```mermaid
+%%{init:{
+"theme":"base",
+"themeVariables":{
+"primaryTextColor":"#111827",
+"lineColor":"#475569",
+"background":"transparent"
+}}}%%
+
 flowchart LR
     Registry[("Shared Module<br/>Registry")]
 
@@ -400,11 +448,11 @@ flowchart LR
     Registry --> SGm["security-group module"]
     Registry --> EC2m["ec2 module"]
 
-    style Registry fill:#1e293b,stroke:#0f172a,color:#fff
-    style Dev fill:#dcfce7,stroke:#16a34a
-    style Test fill:#fef3c7,stroke:#d97706
-    style Stage fill:#dbeafe,stroke:#2563eb
-    style Prod fill:#fee2e2,stroke:#dc2626
+    style Registry fill:#93C5FD,stroke:#1D4ED8,color:#111827,stroke-width:2px
+    style Dev fill:#86EFAC,stroke:#16A34A,color:#111827,stroke-width:2px
+    style Test fill:#FCD34D,stroke:#D97706,color:#111827,stroke-width:2px
+    style Stage fill:#93C5FD,stroke:#2563EB,color:#111827,stroke-width:2px
+    style Prod fill:#FCA5A5,stroke:#DC2626,color:#111827,stroke-width:2px
 ```
 
 Only the variable values (instance size, CIDR ranges, environment tags, etc.) change between environments — the underlying module code stays identical, tested, and version-controlled. This is what makes a module registry so valuable: a bug fix or improvement made once benefits every environment that consumes it.
