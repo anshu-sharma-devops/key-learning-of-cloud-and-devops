@@ -24,6 +24,14 @@ Each phase builds on the last: starting with a single EC2 instance, then adding 
 > 🔄 **This is a living repository** — new phases are added as I progress. Check back for updates.
 
 ```mermaid
+%%{init:{
+"theme":"base",
+"themeVariables":{
+"primaryTextColor":"#111827",
+"lineColor":"#475569",
+"background":"transparent"
+}}}%%
+
 flowchart LR
     P1["Phase 1<br/>Basic EC2"] --> P2["Phase 2<br/>VPC & Networking"]
     P2 --> P3["Phase 3<br/>Remote State"]
@@ -33,8 +41,8 @@ flowchart LR
     P6 --> P7["Phase 7<br/>Terraform Modules"]
     P7 --> P8["Phase 8<br/>Production Infra"]
 
-    classDef done fill:#16a34a,stroke:#14532d,color:#fff,font-weight:bold;
-    classDef next fill:#f1f5f9,stroke:#64748b,color:#334155,stroke-dasharray: 4 4;
+    classDef done fill:#4ADE80,stroke:#15803D,color:#111827,stroke-width:2px,font-weight:bold;
+    classDef next fill:#FACC15,stroke:#B45309,color:#111827,stroke-width:2px,stroke-dasharray: 4 4;
     class P1,P2,P3,P4,P5,P6,P7 done;
     class P8 next;
 ```
@@ -82,7 +90,15 @@ flowchart LR
 **Progress: 7 of 8 phases complete**
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': {'pie1':'#16a34a','pie2':'#e5e7eb'}}}%%
+%%{init: {
+"theme":"base",
+"themeVariables": {
+"pie1":"#4ADE80",
+"pie2":"#FACC15",
+"primaryTextColor":"#111827",
+"background":"transparent"
+}
+}}%%
 pie showData
     "Completed" : 7
     "Planned" : 1
@@ -227,6 +243,14 @@ terraform init -migrate-state
 ## 🚀 Terraform Workflow
 
 ```mermaid
+%%{init:{
+"theme":"base",
+"themeVariables":{
+"primaryTextColor":"#111827",
+"lineColor":"#475569",
+"background":"transparent"
+}}}%%
+
 flowchart TD
     A["Write Terraform Code"] --> B["terraform init"]
     B --> C["terraform validate"]
@@ -239,16 +263,16 @@ flowchart TD
     H --> I["terraform output"]
     I --> J["terraform destroy<br/>(when finished)"]
 
-    style A fill:#ede9fe,stroke:#7c3aed
-    style B fill:#dbeafe,stroke:#2563eb
-    style C fill:#dbeafe,stroke:#2563eb
-    style D fill:#dbeafe,stroke:#2563eb
-    style E fill:#fef3c7,stroke:#d97706
-    style F fill:#fef3c7,stroke:#d97706
-    style G fill:#dcfce7,stroke:#16a34a
-    style H fill:#dcfce7,stroke:#16a34a
-    style I fill:#dcfce7,stroke:#16a34a
-    style J fill:#fee2e2,stroke:#dc2626
+    style A fill:#C4B5FD,stroke:#7C3AED,color:#111827,stroke-width:2px
+    style B fill:#93C5FD,stroke:#2563EB,color:#111827,stroke-width:2px
+    style C fill:#93C5FD,stroke:#2563EB,color:#111827,stroke-width:2px
+    style D fill:#93C5FD,stroke:#2563EB,color:#111827,stroke-width:2px
+    style E fill:#FCD34D,stroke:#D97706,color:#111827,stroke-width:2px
+    style F fill:#FCD34D,stroke:#D97706,color:#111827,stroke-width:2px
+    style G fill:#86EFAC,stroke:#16A34A,color:#111827,stroke-width:2px
+    style H fill:#86EFAC,stroke:#16A34A,color:#111827,stroke-width:2px
+    style I fill:#86EFAC,stroke:#16A34A,color:#111827,stroke-width:2px
+    style J fill:#FCA5A5,stroke:#DC2626,color:#111827,stroke-width:2px
 ```
 
 ---
@@ -302,6 +326,14 @@ Created and managed:
 Refactored the Jenkins infrastructure from Phase 6 into a fully modular codebase:
 
 ```mermaid
+%%{init:{
+"theme":"base",
+"themeVariables":{
+"primaryTextColor":"#111827",
+"lineColor":"#475569",
+"background":"transparent"
+}}}%%
+
 flowchart TB
     Root["Root Module"] --> VPC["VPC Module"]
     Root --> SG["Security Group Module"]
@@ -310,7 +342,7 @@ flowchart TB
     VPC -. subnet_id .-> EC2
     SG -. sg_id .-> EC2
 
-    classDef m fill:#4f46e5,stroke:#312e81,color:#fff,font-weight:bold;
+    classDef m fill:#93C5FD,stroke:#1D4ED8,color:#111827,stroke-width:2px,font-weight:bold;
     class Root,VPC,SG,EC2 m;
 ```
 
@@ -327,6 +359,14 @@ flowchart TB
 ## 🎓 Learning Goal
 
 ```mermaid
+%%{init:{
+"theme":"base",
+"themeVariables":{
+"primaryTextColor":"#111827",
+"lineColor":"#475569",
+"background":"transparent"
+}}}%%
+
 flowchart LR
     A["Single EC2<br/>Instance"] --> B["Custom<br/>Networking"]
     B --> C["Remote State<br/>Management"]
@@ -336,9 +376,9 @@ flowchart LR
     F --> G["Reusable<br/>Modules"]
     G --> H["Production-Grade<br/>Deployments"]
 
-    classDef done fill:#16a34a,stroke:#14532d,color:#fff;
-    classDef current fill:#f59e0b,stroke:#92400e,color:#fff,font-weight:bold;
-    classDef next fill:#e2e8f0,stroke:#64748b,color:#334155,stroke-dasharray: 4 4;
+    classDef done fill:#4ADE80,stroke:#15803D,color:#111827,stroke-width:2px,font-weight:bold;
+    classDef current fill:#FCD34D,stroke:#B45309,color:#111827,stroke-width:2px,font-weight:bold;
+    classDef next fill:#FACC15,stroke:#B45309,color:#111827,stroke-width:2px,stroke-dasharray: 4 4;
     class A,B,C,D,E,F,G done;
     class H next;
 ```
