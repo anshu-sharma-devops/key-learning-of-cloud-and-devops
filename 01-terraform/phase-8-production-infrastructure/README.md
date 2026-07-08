@@ -58,7 +58,7 @@ This phase simulates how infrastructure is commonly organized in enterprise envi
 
 **Traffic flow:** Internet → Internet Gateway → VPC → Public Subnet → Security Group (22, 80) → EC2 Web Server (Apache)
 
-![Phase 8 architecture diagram](./architecture-diagram.svg)
+
 
 Terraform Project Structure
 
