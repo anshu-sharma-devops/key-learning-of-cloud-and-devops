@@ -89,7 +89,6 @@ class P1,P2,P3,P4,P5,P6,P7,P8 done;
 
 **Progress: 8 of 8 phases complete**
 
-## 🎯 Progress
 
 ## 📊 Progress
 
@@ -308,7 +307,7 @@ flowchart TD
 
 ---
 
-## 📊 Progress
+## 📈 Progress Log
 
 ### ✅ Phase 1 — Basic EC2 Deployment
 Created and managed:
@@ -437,6 +436,8 @@ Created:
 📖 Full write-up:
 [`phase-8-production-infrastructure/README.md`](./phase-8-production-infrastructure/README.md)
 
+---
+
 ## 🎓 Learning Goal
 
 ```mermaid
@@ -449,17 +450,26 @@ Created:
 }}}%%
 
 flowchart LR
-    A["Single EC2"] --> B["Networking"]
-    B --> C["Remote State"]
-    C --> D["Multi-EC2"]
-    D --> E["Load Balancer"]
-    E --> F["Jenkins"]
-    F --> G["Terraform Modules"]
-    G --> H["Production Infrastructure"]
 
-    classDef done fill:#4ADE80,stroke:#15803D,color:#111827,stroke-width:2px,font-weight:bold;
+A["☁️ Phase 1<br/>Basic EC2"]
+-->
+B["🌐 Phase 2<br/>Networking"]
+-->
+C["🗄️ Phase 3<br/>Remote State"]
+-->
+D["🖥️ Phase 4<br/>Multi EC2"]
+-->
+E["⚖️ Phase 5<br/>Load Balancer"]
+-->
+F["⚙️ Phase 6<br/>Jenkins"]
+-->
+G["📦 Phase 7<br/>Modules"]
+-->
+H["🏢 Phase 8<br/>Production Infrastructure"]
 
-    class A,B,C,D,E,F,G,H done;
+classDef done fill:#4ADE80,stroke:#15803D,color:#111827,stroke-width:2px,font-weight:bold;
+
+class A,B,C,D,E,F,G,H done;
 ```
 
 ### 🏆 Journey Completed
@@ -501,6 +511,17 @@ flowchart LR
 
 ---
 
+## 📌 Project Highlights
+
+- ✅ 8 Hands-on Terraform Projects
+- ✅ AWS Free Tier Compatible
+- ✅ Production-style Repository Structure
+- ✅ Modular Infrastructure Design
+- ✅ 100+ Screenshots
+- ✅ Enterprise Documentation
+
+
+  
 ## 📌 Key Learnings So Far
 
 - Infrastructure can be fully defined using code.
@@ -524,8 +545,38 @@ flowchart LR
 - Terraform modules make Infrastructure as Code reusable and maintainable.
 - Development and Production can share the same modules while using different configurations.
 - A production-grade Terraform repository is easier to scale, maintain, and collaborate on.
+
 ---
 
+<div align="center">
+
+## 🎉 Terraform Learning Journey Completed
+
+From a single EC2 instance to a production-style Terraform project using reusable modules and environment-based architecture.
+
+⭐ The next step is integrating Terraform with Jenkins, Ansible, Docker, Kubernetes, Helm, Prometheus, and Grafana to build complete DevOps solutions.
+
+</div>
+## 📊 Repository Statistics
+
+| Metric | Value |
+|--------|------:|
+| Terraform Phases | 8 |
+| AWS Services Used | 8+ |
+| Terraform Modules | 3 |
+| Environments | 2 |
+| Screenshots | 100+ |
+| Documentation | Complete |
+
+## 🏆 Achievements
+
+- Completed 8 Terraform phases
+- Built reusable infrastructure modules
+- Designed environment-based infrastructure
+- Followed Infrastructure as Code best practices
+- Created production-quality documentation
+
+---
 ## 🚀 What's Next
 
 With the Terraform learning journey complete, the next step is to integrate Terraform into complete DevOps workflows.
@@ -544,10 +595,11 @@ Future projects will combine Terraform with:
 ## 👨‍💻 Author
 
 **Anshu Sharma**
+
 Cloud & DevOps Learning Journey
 
 [![GitHub](https://img.shields.io/badge/GitHub-anshu--sharma--devops-181717?logo=github&logoColor=white)](https://github.com/anshu-sharma-devops)
 
-*⭐ This repo is updated as new phases are completed — feel free to follow along.*
+*⭐ This repository is updated as new phases are completed.*
 
 </div>
