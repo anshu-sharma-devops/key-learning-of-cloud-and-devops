@@ -557,7 +557,7 @@ From a single EC2 instance to a production-style Terraform project using reusabl
 ⭐ The next step is integrating Terraform with Jenkins, Ansible, Docker, Kubernetes, Helm, Prometheus, and Grafana to build complete DevOps solutions.
 
 </div>
-## 📊 Repository Statistics
+📊 Repository Statistics
 
 | Metric | Value |
 |--------|------:|
