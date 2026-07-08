@@ -449,26 +449,22 @@ Created:
 }}}%%
 
 flowchart LR
-    A["Single EC2<br/>Instance"] --> B["Custom<br/>Networking"]
-    B --> C["Remote State<br/>Management"]
-    C --> D["Multi-Server<br/>Infrastructure"]
-    D --> E["Load Balancing<br/>& Scaling"]
-    E --> F["CI/CD Infra<br/>(Jenkins)"]
-    F --> G["Reusable<br/>Modules"]
-    G --> H["Production-Grade<br/>Deployments"]
+    A["Single EC2"] --> B["Networking"]
+    B --> C["Remote State"]
+    C --> D["Multi-EC2"]
+    D --> E["Load Balancer"]
+    E --> F["Jenkins"]
+    F --> G["Terraform Modules"]
+    G --> H["Production Infrastructure"]
 
     classDef done fill:#4ADE80,stroke:#15803D,color:#111827,stroke-width:2px,font-weight:bold;
-    classDef current fill:#FCD34D,stroke:#B45309,color:#111827,stroke-width:2px,font-weight:bold;
-    classDef next fill:#FACC15,stroke:#B45309,color:#111827,stroke-width:2px,stroke-dasharray: 4 4;
-    class A,B,C,D,E,F,G done;
-    class H next;
-...
 
-## 🎯 Learning Goal
+    class A,B,C,D,E,F,G,H done;
+```
+
+### 🏆 Journey Completed
 
 ```text
-Terraform Learning Journey
-
 ✅ Phase 1 – Basic EC2 Deployment
         ↓
 ✅ Phase 2 – VPC & Networking
