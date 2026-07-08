@@ -16,14 +16,13 @@ Part of the **Key Learning of Cloud and DevOps** repository
 ---
 
 ## 📖 About This Journey
+This repository documents my hands-on journey of learning **Infrastructure as Code (IaC)** using Terraform on AWS. The goal is to replace manual AWS console operations with version-controlled, repeatable, and scalable infrastructure defined entirely in code.
 
-This repository documents my hands-on path to learning **Infrastructure as Code** with Terraform on AWS — replacing manual, click-through console setups with version-controlled, repeatable, and scalable infrastructure defined entirely in code.
-
-Each phase builds on the last: starting with a single EC2 instance, then adding networking, remote state, multi-server architecture, load balancing, CI/CD infrastructure, and now Each phase builds upon the previous one, starting with a single EC2 instance and gradually introducing networking, remote state management, multi-server infrastructure, load balancing, Jenkins infrastructure, reusable Terraform modules, and finally a production-style, environment-based infrastructure using Development and Production configurations.
+Each phase builds upon the previous one, starting with a single EC2 instance and gradually introducing networking, remote state management, multi-server infrastructure, load balancing, Jenkins infrastructure, reusable Terraform modules, and finally a production-style, environment-based infrastructure using Development and Production configurations.
 
 The journey demonstrates how Terraform evolves from simple Infrastructure as Code examples into enterprise-ready cloud infrastructure that is modular, reusable, scalable, and maintainable.
 
-> 🔄 **This is a living repository** — new phases are added as I progress. Check back for updates.
+> **This is a living repository** — new phases are added as I progress. Check back for updates.
 
 ```mermaid
 %%{init:{
@@ -92,10 +91,13 @@ class P1,P2,P3,P4,P5,P6,P7,P8 done;
 
 ## 🎯 Progress
 
+## 📊 Progress
+
 ```text
 ████████████████████ 100%
 
 8 / 8 Phases Completed
+```
 
 ---
 
@@ -161,7 +163,7 @@ class P1,P2,P3,P4,P5,P6,P7,P8 done;
 │   ├── Root Module (main.tf)
 │   └── Modular Jenkins Deployment
 │
-└──├── phase-8-production-infrastructure/
+├── phase-8-production-infrastructure/
 │   ├── README.md
 │   ├── TROUBLESHOOTING.md
 │   ├── environments/
@@ -233,20 +235,23 @@ terraform init -migrate-state
 - Module-to-module communication (dependency graph)
 - Production-ready folder structure for modular projects
 
-</details>
-
 <details>
-<summary><strong>🔜 Upcoming Concepts — Phase 8</strong></summary>
+<summary><strong>🚀 Future Terraform Learning</strong></summary>
 
 <br>
 
-- Workspaces
-- `count` · `for_each` · Dynamic Blocks
+- Terraform Workspaces
+- `count` and `for_each`
+- Dynamic Blocks
 - Data Sources
-- Multi-Environment Deployments (dev / staging / prod)
-- Automated Jenkins Setup (Ansible)
-
+- Terraform Cloud
+- Multi-AZ Architecture
+- Private Subnets
+- NAT Gateway
+- Application Load Balancer
+- Auto Scaling Groups
 </details>
+
 
 ---
 
@@ -385,15 +390,15 @@ Designed and deployed a production-style Terraform project using reusable module
 ```mermaid
 flowchart LR
 
-DEV["🧪 Development"]
-PROD["🚀 Production"]
+DEV["Development"]
+PROD["Production"]
 
 DEV --> MOD["Reusable Modules"]
 PROD --> MOD
 
-MOD --> VPC["🌐 VPC"]
-MOD --> SG["🛡️ Security Group"]
-MOD --> EC2["🖥️ EC2"]
+MOD --> VPC["VPC Module"]
+MOD --> SG["Security Group Module"]
+MOD --> EC2["EC2 Module"]
 
 classDef env fill:#4ADE80,stroke:#15803D,color:#111827
 classDef module fill:#60A5FA,stroke:#1D4ED8,color:#111827
@@ -441,41 +446,29 @@ flowchart LR
     classDef next fill:#FACC15,stroke:#B45309,color:#111827,stroke-width:2px,stroke-dasharray: 4 4;
     class A,B,C,D,E,F,G done;
     class H next;
-Terraform Learning Journey Completed
+## 🎯 Learning Goal
 
-Phase 1 ✅
+```text
+Terraform Learning Journey
 
-↓
+✅ Phase 1 – Basic EC2 Deployment
+        ↓
+✅ Phase 2 – VPC & Networking
+        ↓
+✅ Phase 3 – Remote State
+        ↓
+✅ Phase 4 – Multi-EC2 Infrastructure
+        ↓
+✅ Phase 5 – Load Balancer & Auto Scaling
+        ↓
+✅ Phase 6 – Jenkins Infrastructure
+        ↓
+✅ Phase 7 – Terraform Modules
+        ↓
+✅ Phase 8 – Production Infrastructure
 
-Phase 2 ✅
-
-↓
-
-Phase 3 ✅
-
-↓
-
-Phase 4 ✅
-
-↓
-
-Phase 5 ✅
-
-↓
-
-Phase 6 ✅
-
-↓
-
-Phase 7 ✅
-
-↓
-
-Phase 8 ✅
-
-Production Infrastructure Completed
-...
-
+🎉 Terraform Learning Journey Completed
+```
 <details>
 <summary><strong>🚀 Future Terraform Learning</strong></summary>
 
@@ -519,7 +512,18 @@ Production Infrastructure Completed
 - A production-grade Terraform repository is easier to scale, maintain, and collaborate on.
 ---
 
+## 🚀 What's Next
 
+With the Terraform learning journey complete, the next step is to integrate Terraform into complete DevOps workflows.
+
+Future projects will combine Terraform with:
+
+- Jenkins (Infrastructure CI/CD)
+- Ansible (Configuration Management)
+- Docker (Containerization)
+- Kubernetes (Container Orchestration)
+- Helm (Package Management)
+- Prometheus & Grafana (Monitoring & Observability)
 
 <div align="center">
 
