@@ -9,7 +9,7 @@ Part of the **Key Learning of Cloud and DevOps** repository
 [![Terraform](https://img.shields.io/badge/Terraform-IaC-844FBA?logo=terraform&logoColor=white)](https://www.terraform.io/)
 [![AWS](https://img.shields.io/badge/AWS-Cloud-FF9900?logo=amazon-aws&logoColor=white)](https://aws.amazon.com/)
 [![Status](https://img.shields.io/badge/Status-Actively%20Updated-brightgreen)]()
-[![Phases Completed](https://img.shields.io/badge/Phases%20Completed-7%2F8-blue)]()
+[![Phases Completed](https://img.shields.io/badge/Phases%20Completed-8%2F8-success)]()
 
 </div>
 
@@ -19,7 +19,9 @@ Part of the **Key Learning of Cloud and DevOps** repository
 
 This repository documents my hands-on path to learning **Infrastructure as Code** with Terraform on AWS — replacing manual, click-through console setups with version-controlled, repeatable, and scalable infrastructure defined entirely in code.
 
-Each phase builds on the last: starting with a single EC2 instance, then adding networking, remote state, multi-server architecture, load balancing, CI/CD infrastructure, and now **reusable Terraform modules** — with production-grade, multi-environment deployments as the final destination.
+Each phase builds on the last: starting with a single EC2 instance, then adding networking, remote state, multi-server architecture, load balancing, CI/CD infrastructure, and now Each phase builds upon the previous one, starting with a single EC2 instance and gradually introducing networking, remote state management, multi-server infrastructure, load balancing, Jenkins infrastructure, reusable Terraform modules, and finally a production-style, environment-based infrastructure using Development and Production configurations.
+
+The journey demonstrates how Terraform evolves from simple Infrastructure as Code examples into enterprise-ready cloud infrastructure that is modular, reusable, scalable, and maintainable.
 
 > 🔄 **This is a living repository** — new phases are added as I progress. Check back for updates.
 
@@ -39,12 +41,11 @@ flowchart LR
     P4 --> P5["Phase 5<br/>LB & Auto Scaling"]
     P5 --> P6["Phase 6<br/>Jenkins Infra"]
     P6 --> P7["Phase 7<br/>Terraform Modules"]
-    P7 --> P8["Phase 8<br/>Production Infra"]
+  P7 --> P8["Phase 8<br/>Production Infrastructure"]
 
-    classDef done fill:#4ADE80,stroke:#15803D,color:#111827,stroke-width:2px,font-weight:bold;
-    classDef next fill:#FACC15,stroke:#B45309,color:#111827,stroke-width:2px,stroke-dasharray: 4 4;
-    class P1,P2,P3,P4,P5,P6,P7 done;
-    class P8 next;
+classDef done fill:#4ADE80,stroke:#15803D,color:#111827,stroke-width:2px,font-weight:bold;
+
+class P1,P2,P3,P4,P5,P6,P7,P8 done;
 ```
 
 ---
@@ -85,24 +86,16 @@ flowchart LR
 | 5 | Load Balancer and Auto Scaling | ✅ Completed | [README](./phase-5-load-balancer-autoscaling/README.md) |
 | 6 | Jenkins Infrastructure | ✅ Completed | [README](./phase-6-jenkins-infrastructure/README.md) |
 | 7 | Terraform Modules | ✅ Completed | [README](./phase-7-terraform-modules/README.md) |
-| 8 | Production Infrastructure | 🔜 Planned | — |
+| 8 | Production Infrastructure | ✅ Completed | [README](./phase-8-production-infrastructure/README.md) |
 
-**Progress: 7 of 8 phases complete**
+**Progress: 8 of 8 phases complete**
 
-```mermaid
-%%{init: {
-"theme":"base",
-"themeVariables": {
-"pie1":"#4ADE80",
-"pie2":"#FACC15",
-"primaryTextColor":"#111827",
-"background":"transparent"
-}
-}}%%
-pie showData
-    "Completed" : 7
-    "Planned" : 1
-```
+## 🎯 Progress
+
+```text
+████████████████████ 100%
+
+8 / 8 Phases Completed
 
 ---
 
@@ -168,7 +161,17 @@ pie showData
 │   ├── Root Module (main.tf)
 │   └── Modular Jenkins Deployment
 │
-└── phase-8-production-infrastructure/   🔜 planned
+└──├── phase-8-production-infrastructure/
+│   ├── README.md
+│   ├── TROUBLESHOOTING.md
+│   ├── environments/
+│   │   ├── dev/
+│   │   └── prod/
+│   ├── modules/
+│   │   ├── ec2/
+│   │   ├── security-group/
+│   │   └── vpc/
+│   └── screenshots/
 ```
 
 ---
@@ -365,6 +368,7 @@ flowchart TB
     class Root,VPC,SG,EC2 m;
 ```
 
+
 - **VPC Module** — VPC, public subnet, Internet Gateway, route table & association
 - **Security Group Module** — Jenkins security group (ports 22, 80, 8080)
 - **EC2 Module** — Ubuntu Jenkins instance with User Data bootstrap script
@@ -374,6 +378,43 @@ flowchart TB
 📄 Full write-up: [`phase-7-terraform-modules/README.md`](./phase-7-terraform-modules/README.md)
 
 ---
+### ✅ Phase 8 — Production Infrastructure
+
+Designed and deployed a production-style Terraform project using reusable modules and separate environments.
+
+```mermaid
+flowchart LR
+
+DEV["🧪 Development"]
+PROD["🚀 Production"]
+
+DEV --> MOD["Reusable Modules"]
+PROD --> MOD
+
+MOD --> VPC["🌐 VPC"]
+MOD --> SG["🛡️ Security Group"]
+MOD --> EC2["🖥️ EC2"]
+
+classDef env fill:#4ADE80,stroke:#15803D,color:#111827
+classDef module fill:#60A5FA,stroke:#1D4ED8,color:#111827
+
+class DEV,PROD env
+class MOD,VPC,SG,EC2 module
+```
+
+Created:
+
+- Separate Development and Production environments
+- Reusable VPC Module
+- Reusable Security Group Module
+- Reusable EC2 Module
+- Automatic Apache installation using User Data
+- Production-ready folder structure
+- Modular Infrastructure as Code design
+- Environment-specific configuration using terraform.tfvars
+
+📖 Full write-up:
+[`phase-8-production-infrastructure/README.md`](./phase-8-production-infrastructure/README.md)
 
 ## 🎓 Learning Goal
 
@@ -400,9 +441,56 @@ flowchart LR
     classDef next fill:#FACC15,stroke:#B45309,color:#111827,stroke-width:2px,stroke-dasharray: 4 4;
     class A,B,C,D,E,F,G done;
     class H next;
-```
+Terraform Learning Journey Completed
 
-**Currently here:** ✅ Modules complete → next stop is **Phase 8: Production Infrastructure**
+Phase 1 ✅
+
+↓
+
+Phase 2 ✅
+
+↓
+
+Phase 3 ✅
+
+↓
+
+Phase 4 ✅
+
+↓
+
+Phase 5 ✅
+
+↓
+
+Phase 6 ✅
+
+↓
+
+Phase 7 ✅
+
+↓
+
+Phase 8 ✅
+
+Production Infrastructure Completed
+...
+
+<details>
+<summary><strong>🚀 Future Terraform Learning</strong></summary>
+
+<br>
+
+- Terraform Workspaces
+- count and for_each
+- Dynamic Blocks
+- Data Sources
+- Terraform Cloud
+- Multi-AZ Architecture
+- Private Subnets
+- NAT Gateway
+- ALB + ASG Production Deployment
+</details>
 
 ---
 
@@ -425,17 +513,13 @@ flowchart LR
 - **Terraform Modules turn infrastructure into reusable, composable building blocks** *(new, Phase 7)*.
 - **Child module outputs must be explicitly re-exported at the root level to be visible via `terraform output`** *(new, Phase 7)*.
 - **A well-designed Root Module stays thin — most of the logic lives inside child modules** *(new, Phase 7)*.
-
+- Production infrastructure should be organized using separate environments.
+- Terraform modules make Infrastructure as Code reusable and maintainable.
+- Development and Production can share the same modules while using different configurations.
+- A production-grade Terraform repository is easier to scale, maintain, and collaborate on.
 ---
 
-## 🔜 What's Next
 
-### Phase 8 — Production Infrastructure
-- Multi-environment setups (dev / staging / prod) built on top of the Phase 7 modules
-- Production-grade folder structure and best practices
-- Introducing Terraform Workspaces, `for_each`, and data sources
-
----
 
 <div align="center">
 
