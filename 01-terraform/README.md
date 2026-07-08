@@ -190,7 +190,7 @@ class P1,P2,P3,P4,P5,P6,P7,P8 done;
 - Terraform State · Remote State · Backend Configuration
 - State Migration · State Locking
 - Resource Dependencies · Multi-Resource Deployments
-- **Terraform Modules · Root & Child Modules · Module Composition** *(new, Phase 7)*
+- Terraform Modules · Root & Child Modules · Module Composition
 
 **AWS Networking Concepts**
 - VPC · Subnets · Internet Gateway
@@ -202,7 +202,11 @@ class P1,P2,P3,P4,P5,P6,P7,P8 done;
 **Infrastructure Concepts**
 - Multi-EC2 Infrastructure · Shared Security Groups
 - Server Role Separation · Multi-Server Architecture
-- **Modular, DRY Infrastructure Design** *(new, Phase 7)*
+- Modular, DRY Infrastructure Design
+- Environment-Based Infrastructure
+- Development and Production Separation
+- Production Repository Organization
+- Environment-specific `terraform.tfvars`
 
 **Terraform Commands**
 
@@ -218,22 +222,34 @@ terraform init -reconfigure
 terraform init -migrate-state
 ```
 
-**Load Balancing & Scaling (Phase 5)**
-- Application Load Balancer (ALB) · Target Groups
-- Launch Templates · Auto Scaling Groups
-- Dynamic Scaling Policies · High Availability Design
+**Load Balancing & Scaling**
+- Application Load Balancer (ALB)
+- Target Groups
+- Launch Templates
+- Auto Scaling Groups
+- Dynamic Scaling Policies
+- High Availability Design
 
-**CI/CD Infrastructure (Phase 6)**
+**CI/CD Infrastructure**
 - Dedicated Jenkins Server Provisioning
 - CI/CD-Specific Security Group Configuration
-- Infrastructure/Configuration Separation
+- Infrastructure and Configuration Separation
 
-**Terraform Modules (Phase 7)**
+**Terraform Modules**
 - Converting monolithic configuration into reusable modules
-- Root Module vs. Child Module design
+- Root Module vs Child Module design
 - Passing variables into modules and returning values via outputs
-- Module-to-module communication (dependency graph)
-- Production-ready folder structure for modular projects
+- Module-to-module communication
+- Production-ready modular folder structure
+
+**Production Infrastructure**
+- Separate `dev` and `prod` environments
+- Reusable VPC, Security Group, and EC2 modules
+- Environment-specific variables
+- Production-style project structure
+- Free Tier-safe deployment and cleanup
+
+</details>
 
 <details>
 <summary><strong>🚀 Future Terraform Learning</strong></summary>
@@ -250,8 +266,8 @@ terraform init -migrate-state
 - NAT Gateway
 - Application Load Balancer
 - Auto Scaling Groups
-</details>
 
+</details>
 
 ---
 
@@ -292,7 +308,7 @@ flowchart TD
 
 ---
 
-## 📈 Progress Log
+## 📊 Progress
 
 ### ✅ Phase 1 — Basic EC2 Deployment
 Created and managed:
@@ -446,6 +462,8 @@ flowchart LR
     classDef next fill:#FACC15,stroke:#B45309,color:#111827,stroke-width:2px,stroke-dasharray: 4 4;
     class A,B,C,D,E,F,G done;
     class H next;
+...
+
 ## 🎯 Learning Goal
 
 ```text
