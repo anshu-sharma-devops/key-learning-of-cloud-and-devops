@@ -62,20 +62,21 @@ class P1,P2,P3,P4,P5,P6,P7,P8 done;
 
 ## 🛠️ Technologies Used
 
-| Category | Technology |
-|---|---|
-| ☁️ Cloud Provider | AWS |
-| 🧱 Infrastructure as Code | Terraform |
-| 🔧 Version Control | Git |
-| 📦 Repository | GitHub |
-| 💻 Code Editor | VS Code |
-| 🖥️ Operating System | macOS |
-| ⌨️ Terminal | zsh |
+| Category                  | Technology |
+| ------------------------- | ---------- |
+| ☁️ Cloud Provider         | AWS        |
+| 🧱 Infrastructure as Code | Terraform  |
+| 🔧 Version Control        | Git        |
+| 📦 Repository             | GitHub     |
+| 💻 Code Editor            | VS Code    |
+| 🖥️ Operating System       | macOS      |
+| ⌨️ Terminal               | zsh        |
 
 ---
 
 ## 🗺️ Terraform Learning Roadmap
 
+<<<<<<< HEAD
 | Phase | Topic | Status | Write-up |
 |---|---|:---:|---|
 | 1 | Basic EC2 Deployment | ✅ Completed | [README](./phase-1-basic-ec2/README.md) |
@@ -86,6 +87,18 @@ class P1,P2,P3,P4,P5,P6,P7,P8 done;
 | 6 | Jenkins Infrastructure | ✅ Completed | [README](./phase-6-jenkins-infrastructure/README.md) |
 | 7 | Terraform Modules | ✅ Completed | [README](./phase-7-terraform-modules/README.md) |
 | 8 | Production Infrastructure | ✅ Completed | [README](./phase-8-production-infrastructure/README.md) |
+=======
+| Phase | Topic                          |    Status    | Write-up                                                |
+| ----- | ------------------------------ | :----------: | ------------------------------------------------------- |
+| 1     | Basic EC2 Deployment           | ✅ Completed | [README](./phase-1-basic-ec2/README.md)                 |
+| 2     | VPC and Networking             | ✅ Completed | [README](./phase-2-vpc-networking/README.md)            |
+| 3     | Remote State Management        | ✅ Completed | [README](./phase-3-remote-state/README.md)              |
+| 4     | Multi-EC2 Infrastructure       | ✅ Completed | [README](./phase-4-multi-ec2/README.md)                 |
+| 5     | Load Balancer and Auto Scaling | ✅ Completed | [README](./phase-5-load-balancer-autoscaling/README.md) |
+| 6     | Jenkins Infrastructure         | ✅ Completed | [README](./phase-6-jenkins-infrastructure/README.md)    |
+| 7     | Terraform Modules              | ✅ Completed | [README](./phase-7-terraform-modules/README.md)         |
+| 8     | Production Infrastructure      |  🔜 Planned  | —                                                       |
+>>>>>>> 1632cab (had some changes in readme file)
 
 **Progress: 8 of 8 phases complete**
 
@@ -185,6 +198,7 @@ class P1,P2,P3,P4,P5,P6,P7,P8 done;
 <br>
 
 **Core Terraform Concepts**
+
 - Providers · Resources · Variables · Outputs
 - Terraform State · Remote State · Backend Configuration
 - State Migration · State Locking
@@ -192,20 +206,19 @@ class P1,P2,P3,P4,P5,P6,P7,P8 done;
 - Terraform Modules · Root & Child Modules · Module Composition
 
 **AWS Networking Concepts**
+
 - VPC · Subnets · Internet Gateway
 - Route Tables · Route Table Associations · Security Groups
 
 **AWS Services Used**
+
 - EC2 · S3 · DynamoDB
 
 **Infrastructure Concepts**
+
 - Multi-EC2 Infrastructure · Shared Security Groups
 - Server Role Separation · Multi-Server Architecture
-- Modular, DRY Infrastructure Design
-- Environment-Based Infrastructure
-- Development and Production Separation
-- Production Repository Organization
-- Environment-specific `terraform.tfvars`
+- **Modular, DRY Infrastructure Design** _(new, Phase 7)_
 
 **Terraform Commands**
 
@@ -310,7 +323,9 @@ flowchart TD
 ## 📈 Progress Log
 
 ### ✅ Phase 1 — Basic EC2 Deployment
+
 Created and managed:
+
 - EC2 Instance
 - Security Group
 - Variables and Outputs
@@ -319,7 +334,9 @@ Created and managed:
 📄 Full write-up: [`phase-1-basic-ec2/README.md`](./phase-1-basic-ec2/README.md)
 
 ### ✅ Phase 2 — VPC and Networking
+
 Created and managed:
+
 - Custom VPC · Public Subnet
 - Internet Gateway · Route Table · Route Table Association
 - Security Group
@@ -328,7 +345,9 @@ Created and managed:
 📄 Full write-up: [`phase-2-vpc-networking/README.md`](./phase-2-vpc-networking/README.md)
 
 ### ✅ Phase 3 — Remote State Management
+
 Created and managed:
+
 - S3 Backend Bucket + Versioning
 - DynamoDB Lock Table
 - Backend Configuration
@@ -337,7 +356,9 @@ Created and managed:
 📄 Full write-up: [`phase-3-remote-state/README.md`](./phase-3-remote-state/README.md)
 
 ### ✅ Phase 4 — Multi-EC2 Infrastructure
+
 Created and managed:
+
 - Jenkins Server EC2
 - Application Server EC2
 - Shared Security Group
@@ -347,7 +368,9 @@ Created and managed:
 📄 Full write-up: [`phase-4-multi-ec2/README.md`](./phase-4-multi-ec2/README.md)
 
 ### ✅ Phase 5 — Load Balancer and Auto Scaling
+
 Created and managed:
+
 - Application Load Balancer (ALB)
 - Target Groups for routing traffic across instances
 - Launch Templates for standardized instance configuration
@@ -356,7 +379,9 @@ Created and managed:
 📄 Full write-up: [`phase-5-load-balancer-autoscaling/README.md`](./phase-5-load-balancer-autoscaling/README.md)
 
 ### ✅ Phase 6 — Jenkins Server Infrastructure
+
 Created and managed:
+
 - Dedicated Jenkins EC2 Instance
 - Jenkins Security Group (SSH + Jenkins UI access)
 - Terraform Outputs for IP, URL, and SSH command
@@ -365,6 +390,7 @@ Created and managed:
 📄 Full write-up: [`phase-6-jenkins-infrastructure/README.md`](./phase-6-jenkins-infrastructure/README.md)
 
 ### ✅ Phase 7 — Terraform Modules
+
 Refactored the Jenkins infrastructure from Phase 6 into a fully modular codebase:
 
 ```mermaid
@@ -538,6 +564,7 @@ class A,B,C,D,E,F,G,H done;
 - Load balancing and auto scaling are key to building highly available systems.
 - Infrastructure provisioning and software configuration should be kept separate.
 - Security Groups can be tailored precisely to a service's access needs, such as Jenkins' SSH and UI ports.
+<<<<<<< HEAD
 - **Terraform Modules turn infrastructure into reusable, composable building blocks** *(new, Phase 7)*.
 - **Child module outputs must be explicitly re-exported at the root level to be visible via `terraform output`** *(new, Phase 7)*.
 - **A well-designed Root Module stays thin — most of the logic lives inside child modules** *(new, Phase 7)*.
@@ -545,7 +572,16 @@ class A,B,C,D,E,F,G,H done;
 - Terraform modules make Infrastructure as Code reusable and maintainable.
 - Development and Production can share the same modules while using different configurations.
 - A production-grade Terraform repository is easier to scale, maintain, and collaborate on.
+<<<<<<< HEAD
 
+=======
+=======
+- **Terraform Modules turn infrastructure into reusable, composable building blocks** _(new, Phase 7)_.
+- **Child module outputs must be explicitly re-exported at the root level to be visible via `terraform output`** _(new, Phase 7)_.
+- **A well-designed Root Module stays thin — most of the logic lives inside child modules** _(new, Phase 7)_.
+
+>>>>>>> 1632cab (had some changes in readme file)
+>>>>>>> 5a01bbe (Add Jenkins phase 1 installation and setup)
 ---
 
 <div align="center">
@@ -579,7 +615,15 @@ From a single EC2 instance to a production-style Terraform project using reusabl
 ---
 ## 🚀 What's Next
 
+<<<<<<< HEAD
 With the Terraform learning journey complete, the next step is to integrate Terraform into complete DevOps workflows.
+=======
+### Phase 8 — Production Infrastructure
+
+- Multi-environment setups (dev / staging / prod) built on top of the Phase 7 modules
+- Production-grade folder structure and best practices
+- Introducing Terraform Workspaces, `for_each`, and data sources
+>>>>>>> 1632cab (had some changes in readme file)
 
 Future projects will combine Terraform with:
 
@@ -600,6 +644,10 @@ Cloud & DevOps Learning Journey
 
 [![GitHub](https://img.shields.io/badge/GitHub-anshu--sharma--devops-181717?logo=github&logoColor=white)](https://github.com/anshu-sharma-devops)
 
+<<<<<<< HEAD
 *⭐ This repository is updated as new phases are completed.*
+=======
+_⭐ This repo is updated as new phases are completed — feel free to follow along._
+>>>>>>> 5a01bbe (Add Jenkins phase 1 installation and setup)
 
 </div>
