@@ -1,0 +1,64 @@
+pipeline {
+    agent any
+
+    environment {
+        APP_DIR = '02-jenkins/phase-3-declarative-pipeline/app'
+        APP_FILE = "${APP_DIR}/index.html"
+    }
+
+    stages {
+        stage('Checkout Information') {
+            steps {
+                echo 'Source code was checked out from GitHub.'
+                sh 'git log -1 --oneline'
+            }
+        }
+
+        stage('Validate Structure') {
+            steps {
+                echo 'Checking the application directory and HTML file...'
+
+                sh '''
+                    set -e
+                    test -d "$APP_DIR"
+                    test -f "$APP_FILE"
+                    echo "Application structure validation passed."
+                '''
+            }
+        }
+
+        stage('Test HTML Content') {
+            steps {
+                echo 'Checking required HTML content...'
+
+                sh '''
+                    set -e
+                    grep -q "Jenkins Phase 3" "$APP_FILE"
+                    grep -q "Declarative Pipeline with Jenkinsfile" "$APP_FILE"
+                    grep -q "Pipeline Successful" "$APP_FILE"
+                    echo "HTML content tests passed."
+                '''
+            }
+        }
+
+        stage('Build Summary') {
+            steps {
+                echo 'All Jenkins Phase 3 validation stages completed.'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Jenkins Phase 3 pipeline completed successfully.'
+        }
+
+        failure {
+            echo 'Jenkins Phase 3 pipeline failed. Review the console output.'
+        }
+
+        always {
+            echo 'Pipeline execution finished.'
+        }
+    }
+}
