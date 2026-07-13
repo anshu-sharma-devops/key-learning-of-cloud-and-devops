@@ -1,0 +1,166 @@
+pipeline {
+    agent any
+
+    options {
+        disableConcurrentBuilds()
+        timestamps()
+    }
+
+    environment {
+        PROJECT_DIR   = '02-jenkins/phase-5-docker-build-pipeline'
+        APP_FILE      = "${PROJECT_DIR}/app/index.html"
+        DOCKERFILE    = "${PROJECT_DIR}/Dockerfile"
+        IMAGE_NAME    = 'jenkins-phase-5'
+        CONTAINER_NAME = 'jenkins-phase-5-test'
+        TEST_PORT     = '8081'
+    }
+
+    stages {
+        stage('Checkout Information') {
+            steps {
+                echo 'Displaying the Git commit used for this build...'
+                sh 'git log -1 --oneline'
+            }
+        }
+
+        stage('Validate Project Files') {
+            steps {
+                echo 'Validating the application and Dockerfile...'
+
+                sh '''
+                    set -e
+
+                    test -d "$PROJECT_DIR"
+                    test -f "$APP_FILE"
+                    test -f "$DOCKERFILE"
+
+                    grep -q "Jenkins Phase 5" "$APP_FILE"
+                    grep -q "Docker Pipeline Successful" "$APP_FILE"
+                    grep -q "FROM nginx:alpine" "$DOCKERFILE"
+
+                    echo "Project file validation passed."
+                '''
+            }
+        }
+
+        stage('Docker Environment') {
+            steps {
+                echo 'Checking Docker availability for Jenkins...'
+
+                sh '''
+                    set -e
+
+                    docker --version
+                    docker info > /dev/null
+
+                    echo "Docker is available to the Jenkins user."
+                '''
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                echo 'Building the Phase 5 Docker image...'
+
+                sh '''
+                    set -e
+
+                    docker build \
+                        --tag "$IMAGE_NAME:$BUILD_NUMBER" \
+                        "$PROJECT_DIR"
+
+                    echo "Docker image built successfully."
+                '''
+            }
+        }
+
+        stage('Run Test Container') {
+            steps {
+                echo 'Starting the Docker container...'
+
+                sh '''
+                    set -e
+
+                    docker rm -f "$CONTAINER_NAME" 2>/dev/null || true
+
+                    docker run \
+                        --detach \
+                        --name "$CONTAINER_NAME" \
+                        --publish "127.0.0.1:$TEST_PORT:80" \
+                        "$IMAGE_NAME:$BUILD_NUMBER"
+
+                    docker ps --filter "name=$CONTAINER_NAME"
+
+                    echo "Docker container started successfully."
+                '''
+            }
+        }
+
+        stage('Test Container Application') {
+            steps {
+                echo 'Testing the website running inside the container...'
+
+                sh '''
+                    set -e
+
+                    ATTEMPT=1
+
+                    while [ "$ATTEMPT" -le 10 ]; do
+                        if curl --fail --silent \
+                            "http://127.0.0.1:$TEST_PORT" \
+                            > /tmp/phase-5-response.html; then
+                            break
+                        fi
+
+                        echo "Waiting for the container... Attempt $ATTEMPT"
+                        ATTEMPT=$((ATTEMPT + 1))
+                        sleep 2
+                    done
+
+                    test -s /tmp/phase-5-response.html
+
+                    grep -q "Jenkins Phase 5" \
+                        /tmp/phase-5-response.html
+
+                    grep -q "Docker Pipeline Successful" \
+                        /tmp/phase-5-response.html
+
+                    echo "Container application test passed."
+                '''
+            }
+        }
+
+        stage('Image Information') {
+            steps {
+                echo 'Displaying the image created by Jenkins...'
+
+                sh '''
+                    docker image ls "$IMAGE_NAME:$BUILD_NUMBER"
+                    docker inspect "$IMAGE_NAME:$BUILD_NUMBER" \
+                        --format='Image ID: {{.Id}}'
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Jenkins Phase 5 Docker Pipeline completed successfully.'
+        }
+
+        failure {
+            echo 'Jenkins Phase 5 Docker Pipeline failed. Review the failed stage.'
+        }
+
+        always {
+            echo 'Removing the temporary test container...'
+
+            sh '''
+                docker rm -f "$CONTAINER_NAME" 2>/dev/null || true
+                rm -f /tmp/phase-5-response.html
+            '''
+
+            echo 'Phase 5 Pipeline cleanup completed.'
+        }
+    }
+}
