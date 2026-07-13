@@ -1,0 +1,234 @@
+pipeline {
+    agent any
+
+    options {
+        disableConcurrentBuilds()
+        timestamps()
+    }
+
+    environment {
+        PROJECT_DIR    = '02-jenkins/phase-6-dockerhub-registry-pipeline'
+        APP_FILE       = "${PROJECT_DIR}/app/index.html"
+        DOCKERFILE     = "${PROJECT_DIR}/Dockerfile"
+
+        IMAGE_REPOSITORY = 'anshu9103/jenkins-phase-6'
+        VERSION_TAG      = "${BUILD_NUMBER}"
+
+        CONTAINER_NAME = 'jenkins-phase-6-test'
+        TEST_PORT      = '8082'
+    }
+
+    stages {
+        stage('Checkout Information') {
+            steps {
+                echo 'Displaying the Git commit used for this build...'
+                sh 'git log -1 --oneline'
+            }
+        }
+
+        stage('Validate Project Files') {
+            steps {
+                echo 'Validating Phase 6 project files...'
+
+                sh '''
+                    set -e
+
+                    test -d "$PROJECT_DIR"
+                    test -f "$APP_FILE"
+                    test -f "$DOCKERFILE"
+
+                    grep -q "Jenkins Phase 6" "$APP_FILE"
+                    grep -q "Docker Hub Registry Pipeline" "$APP_FILE"
+                    grep -q "Registry Pipeline Successful" "$APP_FILE"
+                    grep -q "FROM nginx:alpine" "$DOCKERFILE"
+
+                    echo "Phase 6 project validation passed."
+                '''
+            }
+        }
+
+        stage('Docker Environment') {
+            steps {
+                echo 'Checking Docker availability...'
+
+                sh '''
+                    set -e
+
+                    docker --version
+                    docker info > /dev/null
+
+                    echo "Docker is available to Jenkins."
+                '''
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                echo 'Building the versioned Docker image...'
+
+                sh '''
+                    set -e
+
+                    docker build \
+                        --tag "$IMAGE_REPOSITORY:$VERSION_TAG" \
+                        "$PROJECT_DIR"
+
+                    docker tag \
+                        "$IMAGE_REPOSITORY:$VERSION_TAG" \
+                        "$IMAGE_REPOSITORY:latest"
+
+                    echo "Docker images built and tagged successfully."
+                '''
+            }
+        }
+
+        stage('Run Test Container') {
+            steps {
+                echo 'Starting the Phase 6 test container...'
+
+                sh '''
+                    set -e
+
+                    docker rm -f "$CONTAINER_NAME" 2>/dev/null || true
+
+                    docker run \
+                        --detach \
+                        --name "$CONTAINER_NAME" \
+                        --publish "127.0.0.1:$TEST_PORT:80" \
+                        "$IMAGE_REPOSITORY:$VERSION_TAG"
+
+                    docker ps --filter "name=$CONTAINER_NAME"
+
+                    echo "Phase 6 test container started."
+                '''
+            }
+        }
+
+        stage('Test Container Application') {
+            steps {
+                echo 'Testing the application before publishing...'
+
+                sh '''
+                    set -e
+
+                    ATTEMPT=1
+
+                    while [ "$ATTEMPT" -le 10 ]; do
+                        if curl --fail --silent \
+                            "http://127.0.0.1:$TEST_PORT" \
+                            > /tmp/phase-6-response.html; then
+                            break
+                        fi
+
+                        echo "Waiting for container... Attempt $ATTEMPT"
+                        ATTEMPT=$((ATTEMPT + 1))
+                        sleep 2
+                    done
+
+                    test -s /tmp/phase-6-response.html
+
+                    grep -q "Jenkins Phase 6" \
+                        /tmp/phase-6-response.html
+
+                    grep -q "Registry Pipeline Successful" \
+                        /tmp/phase-6-response.html
+
+                    echo "Phase 6 container application test passed."
+                '''
+            }
+        }
+
+        stage('Docker Hub Login') {
+            steps {
+                echo 'Logging in to Docker Hub using Jenkins credentials...'
+
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-credentials',
+                        usernameVariable: 'DOCKERHUB_USERNAME',
+                        passwordVariable: 'DOCKERHUB_TOKEN'
+                    )
+                ]) {
+                    sh '''
+                        set +x
+
+                        echo "$DOCKERHUB_TOKEN" |
+                            docker login \
+                                --username "$DOCKERHUB_USERNAME" \
+                                --password-stdin
+
+                        echo "Docker Hub login completed successfully."
+                    '''
+                }
+            }
+        }
+
+        stage('Push Versioned Image') {
+            steps {
+                echo 'Pushing the versioned image to Docker Hub...'
+
+                sh '''
+                    set -e
+
+                    docker push \
+                        "$IMAGE_REPOSITORY:$VERSION_TAG"
+
+                    echo "Versioned Docker image pushed successfully."
+                '''
+            }
+        }
+
+        stage('Push Latest Image') {
+            steps {
+                echo 'Pushing the latest image tag to Docker Hub...'
+
+                sh '''
+                    set -e
+
+                    docker push \
+                        "$IMAGE_REPOSITORY:latest"
+
+                    echo "Latest Docker image pushed successfully."
+                '''
+            }
+        }
+
+        stage('Published Image Summary') {
+            steps {
+                echo 'Displaying the published image information...'
+
+                sh '''
+                    docker image ls "$IMAGE_REPOSITORY"
+
+                    echo "Published versioned image:"
+                    echo "$IMAGE_REPOSITORY:$VERSION_TAG"
+
+                    echo "Published latest image:"
+                    echo "$IMAGE_REPOSITORY:latest"
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Jenkins Phase 6 Docker Hub Pipeline completed successfully.'
+        }
+
+        failure {
+            echo 'Jenkins Phase 6 Pipeline failed. Review the failed stage.'
+        }
+
+        always {
+            echo 'Cleaning temporary Phase 6 resources...'
+
+            sh '''
+                docker rm -f "$CONTAINER_NAME" 2>/dev/null || true
+                rm -f /tmp/phase-6-response.html
+                docker logout 2>/dev/null || true
+            '''
+
+            echo 'Phase 6 Pipeline cleanup completed.'
+        }
+    }
+}

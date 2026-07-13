@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Jenkins Phase 6</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            font-family: Arial, sans-serif;
+            color: #f8fafc;
+            background: linear-gradient(135deg, #0c4a6e, #1e3a8a);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            padding: 50px;
+            text-align: center;
+            background: rgba(15, 23, 42, 0.94);
+            border: 1px solid #38bdf8;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #38bdf8;
+        }
+
+        p {
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        .workflow {
+            margin: 30px 0;
+            padding: 20px;
+            color: #e0f2fe;
+            background: #075985;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+
+        .image-name {
+            margin: 25px 0;
+            padding: 14px;
+            color: #bae6fd;
+            background: #172554;
+            border: 1px solid #0284c7;
+            border-radius: 10px;
+            font-family: monospace;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 12px 24px;
+            color: #052e16;
+            background: #4ade80;
+            border-radius: 999px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <h1>Jenkins Phase 6</h1>
+
+        <h2>Docker Hub Registry Pipeline</h2>
+
+        <p>
+            Jenkins built, tested, tagged and published this Docker
+            application to Docker Hub using secure credentials.
+        </p>
+
+        <div class="workflow">
+            GitHub → Jenkins → Docker Build → Test → Docker Hub
+        </div>
+
+        <div class="image-name">
+            anshu9103/jenkins-phase-6
+        </div>
+
+        <p>
+            Created by Anshu Sharma as part of the Cloud and DevOps
+            learning journey.
+        </p>
+
+        <div class="status">Registry Pipeline Successful</div>
+    </main>
+</body>
+</html>
