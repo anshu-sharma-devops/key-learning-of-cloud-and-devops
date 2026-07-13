@@ -1,0 +1,256 @@
+pipeline {
+    agent any
+
+    options {
+        disableConcurrentBuilds()
+        timestamps()
+        buildDiscarder(
+            logRotator(
+                daysToKeepStr: '7',
+                numToKeepStr: '10'
+            )
+        )
+    }
+
+    parameters {
+        choice(
+            name: 'DEPLOY_ENV',
+            choices: [
+                'development',
+                'production'
+            ],
+            description: 'Select the target deployment environment.'
+        )
+
+        string(
+            name: 'IMAGE_TAG',
+            defaultValue: 'latest',
+            description: 'Docker image tag to deploy, for example: latest or 1.',
+            trim: true
+        )
+
+        booleanParam(
+            name: 'KEEP_CONTAINER',
+            defaultValue: true,
+            description: 'Keep the deployed container running after validation.'
+        )
+    }
+
+    environment {
+        IMAGE_REPOSITORY = 'anshu9103/jenkins-phase-6'
+    }
+
+    stages {
+        stage('Checkout Information') {
+            steps {
+                echo 'Displaying the Git commit containing this deployment Pipeline...'
+                sh 'git log -1 --oneline'
+            }
+        }
+
+        stage('Initialize Deployment') {
+            steps {
+                script {
+                    if (params.DEPLOY_ENV == 'development') {
+                        env.CONTAINER_NAME = 'jenkins-phase-7-dev'
+                        env.DEPLOY_PORT = '8083'
+                    } else {
+                        env.CONTAINER_NAME = 'jenkins-phase-7-prod'
+                        env.DEPLOY_PORT = '8084'
+                    }
+
+                    env.SELECTED_IMAGE =
+                        "${env.IMAGE_REPOSITORY}:${params.IMAGE_TAG}"
+                }
+
+                echo """
+                Deployment environment: ${params.DEPLOY_ENV}
+                Docker image: ${env.SELECTED_IMAGE}
+                Container name: ${env.CONTAINER_NAME}
+                Deployment port: ${env.DEPLOY_PORT}
+                Keep container: ${params.KEEP_CONTAINER}
+                """
+            }
+        }
+
+        stage('Validate Parameters') {
+            steps {
+                echo 'Validating deployment parameters...'
+
+                sh '''
+                    set -e
+
+                    test -n "$DEPLOY_ENV"
+                    test -n "$IMAGE_TAG"
+                    test -n "$SELECTED_IMAGE"
+                    test -n "$CONTAINER_NAME"
+                    test -n "$DEPLOY_PORT"
+
+                    case "$IMAGE_TAG" in
+                        *[!a-zA-Z0-9._-]*)
+                            echo "Invalid Docker image tag: $IMAGE_TAG"
+                            exit 1
+                            ;;
+                    esac
+
+                    echo "Deployment parameter validation passed."
+                '''
+            }
+        }
+
+        stage('Pull Docker Image') {
+            steps {
+                echo "Pulling ${env.SELECTED_IMAGE} from Docker Hub..."
+
+                sh '''
+                    set -e
+
+                    docker pull "$SELECTED_IMAGE"
+                    docker image inspect "$SELECTED_IMAGE" > /dev/null
+
+                    echo "Docker image pulled and verified successfully."
+                '''
+            }
+        }
+
+        stage('Production Approval') {
+            when {
+                expression {
+                    params.DEPLOY_ENV == 'production'
+                }
+            }
+
+            steps {
+                input(
+                    message: """
+                    Approve production deployment?
+
+                    Image: ${env.SELECTED_IMAGE}
+                    Container: ${env.CONTAINER_NAME}
+                    Port: ${env.DEPLOY_PORT}
+                    """,
+                    ok: 'Deploy to Production'
+                )
+            }
+        }
+
+        stage('Deploy Container') {
+            steps {
+                echo "Deploying ${env.SELECTED_IMAGE} to ${params.DEPLOY_ENV}..."
+
+                sh '''
+                    set -e
+
+                    docker rm -f "$CONTAINER_NAME" 2>/dev/null || true
+
+                    docker run \
+                        --detach \
+                        --name "$CONTAINER_NAME" \
+                        --restart unless-stopped \
+                        --publish "$DEPLOY_PORT:80" \
+                        --label "environment=$DEPLOY_ENV" \
+                        --label "managed-by=jenkins" \
+                        "$SELECTED_IMAGE"
+
+                    docker ps --filter "name=$CONTAINER_NAME"
+
+                    echo "Container deployed successfully."
+                '''
+            }
+        }
+
+        stage('Validate Deployment') {
+            steps {
+                echo 'Testing the deployed application...'
+
+                sh '''
+                    set -e
+
+                    ATTEMPT=1
+
+                    while [ "$ATTEMPT" -le 10 ]; do
+                        if curl --fail --silent \
+                            "http://127.0.0.1:$DEPLOY_PORT" \
+                            > /tmp/phase-7-response.html; then
+                            break
+                        fi
+
+                        echo "Waiting for deployment... Attempt $ATTEMPT"
+                        ATTEMPT=$((ATTEMPT + 1))
+                        sleep 2
+                    done
+
+                    test -s /tmp/phase-7-response.html
+
+                    grep -q "Jenkins Phase 6" \
+                        /tmp/phase-7-response.html
+
+                    grep -q "Registry Pipeline Successful" \
+                        /tmp/phase-7-response.html
+
+                    echo "Deployment validation passed."
+                '''
+            }
+        }
+
+        stage('Deployment Summary') {
+            steps {
+                echo """
+                =========================================
+                Jenkins Phase 7 Deployment Completed
+                =========================================
+                Environment : ${params.DEPLOY_ENV}
+                Image       : ${env.SELECTED_IMAGE}
+                Container   : ${env.CONTAINER_NAME}
+                Port        : ${env.DEPLOY_PORT}
+                URL         : http://JENKINS_PUBLIC_IP:${env.DEPLOY_PORT}
+                Keep Running: ${params.KEEP_CONTAINER}
+                =========================================
+                """
+
+                sh '''
+                    docker inspect "$CONTAINER_NAME" \
+                        --format='Container Status: {{.State.Status}}'
+
+                    docker inspect "$CONTAINER_NAME" \
+                        --format='Container Health: {{if .State.Health}}{{.State.Health.Status}}{{else}}not-configured{{end}}'
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Phase 7 ${params.DEPLOY_ENV} deployment completed successfully."
+
+            script {
+                if (!params.KEEP_CONTAINER) {
+                    echo 'KEEP_CONTAINER is disabled. Removing the deployment container.'
+
+                    sh '''
+                        docker rm -f "$CONTAINER_NAME" \
+                            2>/dev/null || true
+                    '''
+                } else {
+                    echo 'Deployment container will remain running.'
+                }
+            }
+        }
+
+        failure {
+            echo 'Phase 7 deployment failed. Review the failed stage.'
+        }
+
+        aborted {
+            echo 'Phase 7 deployment was cancelled or production approval was rejected.'
+        }
+
+        always {
+            sh '''
+                rm -f /tmp/phase-7-response.html
+            '''
+
+            echo 'Phase 7 Pipeline execution finished.'
+        }
+    }
+}
