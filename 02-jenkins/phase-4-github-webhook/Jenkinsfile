@@ -1,0 +1,60 @@
+pipeline {
+    agent any
+
+    environment {
+        APP_DIR = '02-jenkins/phase-4-github-webhook/app'
+        APP_FILE = "${APP_DIR}/index.html"
+    }
+
+    stages {
+        stage('Webhook Trigger Information') {
+            steps {
+                echo 'Pipeline triggered after a GitHub push event.'
+                sh 'git log -1 --oneline'
+            }
+        }
+
+        stage('Validate Structure') {
+            steps {
+                sh '''
+                    set -e
+                    test -d "$APP_DIR"
+                    test -f "$APP_FILE"
+                    echo "Application structure validation passed."
+                '''
+            }
+        }
+
+        stage('Test Webhook Application') {
+            steps {
+                sh '''
+                    set -e
+                    grep -q "Jenkins Phase 4" "$APP_FILE"
+                    grep -q "GitHub Webhook Automation" "$APP_FILE"
+                    grep -q "Webhook Pipeline Successful" "$APP_FILE"
+                    echo "Webhook application tests passed."
+                '''
+            }
+        }
+
+        stage('Build Summary') {
+            steps {
+                echo 'GitHub webhook pipeline stages completed successfully.'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Phase 4 webhook-triggered pipeline completed successfully.'
+        }
+
+        failure {
+            echo 'Phase 4 pipeline failed. Review the stage and console output.'
+        }
+
+        always {
+            echo 'Phase 4 pipeline execution finished.'
+        }
+    }
+}
